@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MUN Admin Panel</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body { font-family: Arial, sans-serif; }
+
+    .hidden { display: none; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      cursor: pointer;
+      background: #111;
+      color: gold;
+    }
+
+    th:hover {
+      background: #222;
+    }
+
+    .login-box {
+      max-width: 300px;
+      margin: 100px auto;
+      text-align: center;
+    }
+
+    .login-box input, .login-box button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div class="login-box" id="loginBox">
+  <h2>Admin Login</h2>
+  <input type="password" id="password" placeholder="Admin Password">
+  <button onclick="login()">Login</button>
+</div>
+
+<!-- ADMIN CONTENT -->
+<div id="adminContent" class="hidden">
+
+  <div class="admin-header">
+    <h1>IARE MUN – Registrations</h1>
+    <button onclick="exportExcel()">Export to Excel</button>
+    <button onclick="refreshData()">🔄 Refresh</button>
+  </div>
+
+  <table id="dataTable">
+<thead>
+  <tr>
+    <th onclick="sortTable(0)">Leader Name</th>
+    <th onclick="sortTable(1)">Leader Email</th>
+    <th onclick="sortTable(2)">Leader Phone</th>
+
+    <th onclick="sortTable(3)">Delegate 1 Name</th>
+    <th onclick="sortTable(4)">Delegate 1 Email</th>
+    <th onclick="sortTable(5)">Delegate 1 Phone</th>
+
+    <th onclick="sortTable(6)">Delegate 2 Name</th>
+    <th onclick="sortTable(7)">Delegate 2 Email</th>
+    <th onclick="sortTable(8)">Delegate 2 Phone</th>
+
+    <th onclick="sortTable(9)">College</th>
+    <th onclick="sortTable(10)">Committee</th>
+    <th onclick="sortTable(11)">Time</th>
+  </tr>
+</thead>
+
+    <tbody id="output"></tbody>
+  </table>
+
+</div>
+
+<script>
+let cachedPassword = "";
+let sortDir = true;
+
+async function login() {
+  cachedPassword = document.getElementById("password").value;
+
+  const res = await fetch("/admin/data", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ password: cachedPassword })
+  });
+
+  if (!res.ok) {
+    alert("Wrong password");
+    return;
+  }
+
+  document.getElementById("loginBox").classList.add("hidden");
+  document.getElementById("adminContent").classList.remove("hidden");
+
+  loadData();
+}
+
+async function loadData() {
+  const res = await fetch("/admin/data", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ password: cachedPassword })
+  });
+
+  const data = await res.json();
+  renderTable(data);
+}
+
+function renderTable(data) {
+  const tbody = document.getElementById("output");
+  tbody.innerHTML = "";
+
+  data.forEach(r => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${r.leader?.name || ""}</td>
+        <td>${r.leader?.email || ""}</td>
+        <td>${r.leader?.phone || ""}</td>
+
+        <td>${r.delegate1?.name || ""}</td>
+        <td>${r.delegate1?.email || ""}</td>
+        <td>${r.delegate1?.phone || ""}</td>
+
+        <td>${r.delegate2?.name || ""}</td>
+        <td>${r.delegate2?.email || ""}</td>
+        <td>${r.delegate2?.phone || ""}</td>
+
+        <td>${r.college || ""}</td>
+        <td>${r.committee || ""}</td>
+        <td>${r.time || ""}</td>
+      </tr>
+    `;
+  });
+}
+
+function sortTable(colIndex) {
+  const table = document.getElementById("dataTable");
+  const rows = Array.from(table.rows).slice(1);
+
+  sortDir = !sortDir;
+
+  rows.sort((a, b) => {
+    const A = a.cells[colIndex].innerText.toLowerCase();
+    const B = b.cells[colIndex].innerText.toLowerCase();
+    return sortDir ? A.localeCompare(B) : B.localeCompare(A);
+  });
+
+  rows.forEach(row => table.tBodies[0].appendChild(row));
+}
+
+async function exportExcel() {
+  const res = await fetch("/admin/export", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ password: cachedPassword })
+  });
+
+  const result = await res.json();
+  alert(result.message);
+}
+async function refreshData() {
+  await loadData();
+}
+setInterval(() => {
+  if (cachedPassword) {
+    loadData();
+  }
+}, 10000); // refresh every 10 seconds
+
+</script>
+
+</body>
+</html>

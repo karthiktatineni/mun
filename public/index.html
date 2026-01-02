@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="images/favicon.png" type="image/png" sizes="32x32">
+  
+  <!-- Add this canvas at the very top of body -->
+<canvas id="particles" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; pointer-events:none;"></canvas>
+
+
+  <!-- Meta & SEO -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IARE Model United Nations | Where Diplomacy Meets Leadership</title>
+  <meta name="description" content="IARE Model United Nations (IARE MUN): An elite, international standard conference where diplomacy meets leadership. Register, explore committees, and join a prestigious experience." />
+  <meta name="keywords" content="IARE MUN, Model United Nations, Diplomacy, Committees, Conference, Hyderabad, India" />
+  <meta property="og:title" content="IARE Model United Nations" />
+  <meta property="og:description" content="Where Diplomacy Meets Leadership. Join the premier MUN experience." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://example.com/og-image.jpg" />
+  <meta name="theme-color" content="#0B0B0B" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
+  <link rel="stylesheet" href="style.css">
+   
+
+
+</head>
+
+<body>
+  
+<!-- Header -->
+<header aria-label="Primary">
+  <div class="container nav" role="navigation">
+    <!-- Logo + Text -->
+    <div class="brand">
+      <a href="index.html" class="brand-link">
+        <img src="images/favicon.png" alt="IARE MUN Logo" class="brand-logo">
+        <h3>IARE x MUN</h3>
+      </a>
+    </div>
+
+    <!-- Navigation -->
+    <nav aria-label="Main navigation">
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#committees">Committees</a></li>
+        <li><a href="#schedule">Schedule</a></li>
+        <li><a href="#register">Register</a></li>
+        <li><a href="#board">Executive Board</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#contact" class="cta">Contact</a></li>
+      </ul>
+
+      <!-- Hamburger for mobile -->
+      <div class="hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+
+  <!-- Hero -->
+  <section class="hero" aria-label="Hero">
+    <canvas id="particles" aria-hidden="true"></canvas>
+    <div class="container hero-inner">
+      <h1>IARE Model United Nations</h1>
+      <p class="sub">Where Diplomacy Meets Leadership</p>
+      <div class="hero-actions" aria-label="Primary actions">
+        <a href="#register" class="cta" aria-label="Register for IARE MUN">Register Now</a>
+        <a href="#committees" class="btn-outline" aria-label="View MUN Committees">View Committees</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" aria-labelledby="about-title">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="about-title">About IARE MUN</h2>
+        <div class="rule" aria-hidden="true"></div>
+        <span class="accent">Leadership • Diplomacy • Global Awareness</span>
+      </div>
+      <div class="about-grid">
+        <article class="about-card" role="article">
+          <h3>What is Model United Nations?</h3>
+          <div class="sep" aria-hidden="true"></div>
+          <p>Model United Nations (MUN) is a simulation of the United Nations where delegates represent countries, debate agendas, draft resolutions, and navigate diplomacy. It cultivates public speaking, negotiation, and critical thinking in a formal, rules-based setting.</p>
+          <p>Delegates engage with real-world challenges—security, human rights, environment—learning to balance national interest with global responsibility.</p>
+        </article>
+
+        <article class="about-card" role="article">
+          <h3>The purpose of IARE MUN</h3>
+          <div class="sep" aria-hidden="true"></div>
+          <p>IARE MUN is designed to be an elite platform that merges academic rigor with professional decorum. We elevate discourse, reward preparation, and foster a culture of respect and collaboration.</p>
+          <p>Our goal is to nurture leaders who think globally, act ethically, and communicate with authority.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Committees -->
+  <section id="committees" aria-labelledby="committees-title">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="committees-title">Committees</h2>
+        <div class="rule" aria-hidden="true"></div>
+        <span class="accent">Silver accents • Gold dividers • Glassmorphism</span>
+      </div>
+      <div class="cards" role="list">
+        <!-- Card 1 -->
+        <article class="card" role="listitem">
+          <h3>UN Security Council</h3>
+          <div class="meta">
+            <span>Agenda:</span><strong> Crisis in Maritime Security</strong>
+          </div>
+          <p>Deliberate binding resolutions on peace and security, high-pressure negotiations, and swift diplomacy.</p>
+          <span class="badge" aria-label="Difficulty level">Advanced</span>
+        </article>
+        <!-- Card 2 -->
+        <article class="card" role="listitem">
+          <h3>UN General Assembly – DISEC</h3>
+          <div class="meta">
+            <span>Agenda:</span><strong> Responsible AI in Defense</strong>
+          </div>
+          <p>Balance innovation with ethics while addressing autonomous weapons and international frameworks.</p>
+          <span class="badge" aria-label="Difficulty level">Intermediate</span>
+        </article>
+        <!-- Card 3 -->
+        <article class="card" role="listitem">
+          <h3>UNHRC</h3>
+          <div class="meta">
+            <span>Agenda:</span><strong> Digital Privacy as a Human Right</strong>
+          </div>
+          <p>Explore rights-based approaches to data protection, surveillance oversight, and cross-border safeguards.</p>
+          <span class="badge" aria-label="Difficulty level">Intermediate</span>
+        </article>
+        <!-- Card 4 -->
+        <article class="card" role="listitem">
+          <h3>WHO</h3>
+          <div class="meta">
+            <span>Agenda:</span><strong> Global Readiness for Future Pandemics</strong>
+          </div>
+          <p>Strengthen public health systems, supply chain resilience, and equitable access to care.</p>
+          <span class="badge" aria-label="Difficulty level">Beginner</span>
+        </article>
+        <!-- Card 5 -->
+        <article class="card" role="listitem">
+          <h3>UNESCO</h3>
+          <div class="meta">
+            <span>Agenda:</span><strong> Safeguarding Cultural Heritage in Conflict</strong>
+          </div>
+          <p>Protect artifacts and memory amid war and displacement through global cooperation.</p>
+          <span class="badge" aria-label="Difficulty level">Beginner</span>
+        </article>
+        <!-- Card 6 -->
+        <article class="card" role="listitem">
+          <h3>International Press</h3>
+          <div class="meta">
+            <span>Role:</span><strong> Journalists & Photographers</strong>
+          </div>
+          <p>Report proceedings, investigate narratives, and shape accountability through the power of storytelling.</p>
+          <span class="badge" aria-label="Difficulty level">Open</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+
+
+
+  <!-- Schedule -->
+  <section id="schedule" aria-labelledby="schedule-title">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="schedule-title">Schedule & Event Flow</h2>
+        <div class="rule" aria-hidden="true"></div>
+        <span class="accent">Gold dots • Silver lines • On-scroll progression</span>
+      </div>
+
+      <div class="timeline" role="list">
+        <div class="tl-item" role="listitem">
+          <span class="dot" aria-hidden="true"></span>
+          <div class="tl-card">
+            <div class="tl-time">Day 1</div>
+            <strong>Opening Ceremony</strong>
+            <p>Registration, briefing, and keynote. Delegates convene; house rules established.</p>
+          </div>
+        </div>
+        <div class="tl-item" role="listitem">
+          <span class="dot" aria-hidden="true"></span>
+          <div class="tl-card">
+            <div class="tl-time">Day 1</div>
+            <strong>Committee Session I</strong>
+            <p>Agenda introduction, GSL, moderated caucuses, and preliminary lobbying.</p>
+          </div>
+        </div>
+        <div class="tl-item" role="listitem">
+          <span class="dot" aria-hidden="true"></span>
+          <div class="tl-card">
+            <div class="tl-time">Day 2</div>
+            <strong>Committee Session II–III</strong>
+            <p>Working papers and draft resolutions; diplomatic negotiations intensify.</p>
+          </div>
+        </div>
+        <div class="tl-item" role="listitem">
+          <span class="dot" aria-hidden="true"></span>
+          <div class="tl-card">
+            <div class="tl-time">Day 3</div>
+            <strong>Final Committee Session</strong>
+            <p>Amendments, voting blocs, and resolution adoption.</p>
+          </div>
+        </div>
+        <div class="tl-item" role="listitem">
+          <span class="dot" aria-hidden="true"></span>
+          <div class="tl-card">
+            <div class="tl-time">Day 3</div>
+            <strong>Closing Ceremony</strong>
+            <p>Awards, recognitions, and valediction.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Registration -->
+<section id="register" aria-labelledby="register-title">
+  <div class="container">
+
+    <div class="section-head">
+      <h2 id="register-title">Registration</h2>
+      <div class="rule" aria-hidden="true"></div>
+      <span class="accent">Elegant form • Ripple submit • Validation</span>
+    </div>
+
+    <form class="form" id="regForm" novalidate aria-describedby="regHelp">
+
+  <div class="full" id="regHelp" style="margin-bottom:10px;color:#AEAEAE;">
+    Team size: 1 Leader + up to 2 Delegates
+  </div>
+
+  <div class="input-grid">
+
+    <!-- Leader Heading -->
+    <div class="grid-heading">LEADER INFO</div>
+
+    <!-- Leader -->
+    <input type="text" placeholder="Leader Name" required>
+    <input type="email" placeholder="Leader Email" required>
+    <input type="tel" placeholder="Leader Phone Number" required>
+
+    <!-- Delegate 1 Heading -->
+    <div class="grid-heading">DELEGATE 1</div>
+
+    <!-- Delegate 1 -->
+    <input type="text" placeholder="Delegate 1 Name">
+    <input type="email" placeholder="Delegate 1 Email">
+    <input type="tel" placeholder="Delegate 1 Phone Number" required>
+
+    <!-- Delegate 2 Heading -->
+    <div class="grid-heading">DELEGATE 2</div>
+
+    <!-- Delegate 2 -->
+    <input type="text" placeholder="Delegate 2 Name">
+    <input type="email" placeholder="Delegate 2 Email">
+<input type="tel" placeholder="Delegate 2 Phone Number" required>
+    <!-- Common Heading -->
+    <div class="grid-heading">COMMON DETAILS</div>
+
+    <!-- Common -->
+    <input type="text" placeholder="College Name" required>
+    <input type="text" placeholder="Committee Preference" required>
+
+  </div>
+
+  <div class="submit-wrapper">
+    <button type="submit" class="submit-btn">submit</button>
+  </div>
+
+  <p id="msg"></p>
+</form>
+
+
+  </div>
+</section>
+
+
+
+
+
+
+
+</section>
+<!-- Executive Board -->
+<section id="board" aria-labelledby="board-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 id="board-title">Executive Board</h2>
+      <div class="rule" aria-hidden="true"></div>
+      <span class="accent">Premium profiles • Gold borders</span>
+    </div>
+    <div class="board" role="list">
+      
+     
+      <!-- Director General -->
+      <article class="board-card" role="listitem">
+        <div class="avatar" aria-hidden="true">
+          <img src="https://via.placeholder.com/200x200.png?text=DG" alt="Director General portrait" />
+        </div>
+        <div class="role">Director General</div>
+        <div class="name">Name Placeholder</div>
+      </article>
+ <!-- Secretary General -->
+      <article class="board-card" role="listitem">
+        <div class="avatar" aria-hidden="true">
+          <img src="https://via.placeholder.com/200x200.png?text=SG" alt="Secretary General portrait" />
+        </div>
+        <div class="role">Secretary General</div>
+        <div class="name">Name Placeholder</div>
+      </article>
+
+      <!-- Deputy Secretary General -->
+      <article class="board-card" role="listitem">
+        <div class="avatar" aria-hidden="true">
+          <img src="https://via.placeholder.com/200x200.png?text=DSG" alt="Deputy Secretary General portrait" />
+        </div>
+        <div class="role">Deputy Secretary General</div>
+        <div class="name">Name Placeholder</div>
+      </article>
+
+      <!-- OC Head -->
+      <article class="board-card" role="listitem">
+        <div class="avatar" aria-hidden="true">
+          <img src="https://via.placeholder.com/200x200.png?text=OC" alt="OC Head portrait" />
+        </div>
+        <div class="role">OC Head</div>
+        <div class="name">Name Placeholder</div>
+      </article>
+
+      <!-- USG Finance -->
+      <article class="board-card" role="listitem">
+        <div class="avatar" aria-hidden="true">
+          <img src="https://via.placeholder.com/200x200.png?text=USG-F" alt="USG Finance portrait" />
+        </div>
+        <div class="role">USG Finance</div>
+        <div class="name">Name Placeholder</div>
+      </article>
+
+      <!-- USG Hospitality -->
+      <article class="board-card" role="listitem">
+        <div class="avatar" aria-hidden="true">
+          <img src="https://via.placeholder.com/200x200.png?text=USG-H" alt="USG Hospitality portrait" />
+        </div>
+        <div class="role">USG Hospitality</div>
+        <div class="name">Name Placeholder</div>
+      </article>
+
+      <!-- USG Delegate Relations -->
+      <article class="board-card" role="listitem">
+        <div class="avatar" aria-hidden="true">
+          <img src="https://via.placeholder.com/200x200.png?text=USG-DR" alt="USG Delegate Relations portrait" />
+        </div>
+        <div class="role">USG Delegate Relations</div>
+        <div class="name">Name Placeholder</div>
+      </article>
+
+      <!-- USG PR & Promotions -->
+      <article class="board-card" role="listitem">
+        <div class="avatar" aria-hidden="true">
+          <img src="https://via.placeholder.com/200x200.png?text=USG-PR" alt="USG PR & Promotions portrait" />
+        </div>
+        <div class="role">USG PR & Promotions</div>
+        <div class="name">Name Placeholder</div>
+      </article>
+
+      <!-- USG Tech -->
+      <article class="board-card" role="listitem">
+        <div class="avatar" aria-hidden="true">
+          <img src="https://via.placeholder.com/200x200.png?text=USG-T" alt="USG Tech portrait" />
+        </div>
+        <div class="role">USG Tech</div>
+        <div class="name">Name Placeholder</div>
+      </article>
+
+      <!-- USG Design -->
+      <article class="board-card" role="listitem">
+        <div class="avatar" aria-hidden="true">
+          <img src="https://via.placeholder.com/200x200.png?text=USG-D" alt="USG Design portrait" />
+        </div>
+        <div class="role">USG Design</div>
+        <div class="name">Name Placeholder</div>
+      </article>
+
+      <!-- USG Documentation -->
+      <article class="board-card" role="listitem">
+        <div class="avatar" aria-hidden="true">
+          <img src="https://via.placeholder.com/200x200.png?text=USG-Doc" alt="USG Documentation portrait" />
+        </div>
+        <div class="role">USG Documentation</div>
+        <div class="name">Name Placeholder</div>
+      </article>
+
+      <!-- USG Video -->
+      <article class="board-card" role="listitem">
+        <div class="avatar" aria-hidden="true">
+          <img src="https://via.placeholder.com/200x200.png?text=USG-V" alt="USG Video portrait" />
+        </div>
+        <div class="role">USG Video</div>
+        <div class="name">Name Placeholder</div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+  <!-- Why IARE MUN -->
+  <section id="why" aria-labelledby="why-title">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="why-title">Why IARE MUN</h2>
+        <div class="rule" aria-hidden="true"></div>
+        <span class="accent">Certificates • Networking • Skills • Exposure</span>
+      </div>
+
+      <div class="why-grid" role="list">
+        <article class="why-card" role="listitem">
+          <div class="ico" aria-hidden="true">🎓</div>
+          <h3>Certificates</h3>
+          <p>Prestigious participation and merit awards that reflect excellence.</p>
+          <div class="counter" data-target="100">0</div>
+        </article>
+        <article class="why-card" role="listitem">
+          <div class="ico" aria-hidden="true">🤝</div>
+          <h3>Networking</h3>
+          <p>Connect with peers, mentors, and seasoned MUN professionals.</p>
+          <div class="counter" data-target="200">0</div>
+        </article>
+        <article class="why-card" role="listitem">
+          <div class="ico" aria-hidden="true">🗣️</div>
+          <h3>Skill Development</h3>
+          <p>Advance public speaking, policy writing, and negotiation finesse.</p>
+          <div class="counter" data-target="50">0</div>
+        </article>
+        <article class="why-card" role="listitem">
+          <div class="ico" aria-hidden="true">🌐</div>
+          <h3>International Exposure</h3>
+          <p>Global issues, formal procedure, and cross-cultural collaboration.</p>
+          <div class="counter" data-target="30">0</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery" aria-labelledby="gallery-title">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="gallery-title">Gallery</h2>
+        <div class="rule" aria-hidden="true"></div>
+        <span class="accent">Masonry • Gold overlay • Performance optimized</span>
+      </div>
+
+      <div class="gallery" role="list">
+        <!-- Replace with real images; examples are placeholders -->
+        <figure class="gallery-item" role="listitem">
+          <img src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?q=80&w=1080&auto=format&fit=crop" alt="Delegates in session" loading="lazy">
+        </figure>
+        <figure class="gallery-item" role="listitem">
+          <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1080&auto=format&fit=crop" alt="Formal opening ceremony" loading="lazy">
+        </figure>
+        <figure class="gallery-item" role="listitem">
+          <img src="https://images.unsplash.com/photo-1543269868-3f0f6b84db39?q=80&w=1080&auto=format&fit=crop" alt="Networking break" loading="lazy">
+        </figure>
+        <figure class="gallery-item" role="listitem">
+          <img src="https://images.unsplash.com/photo-1517520287167-4bbf64a00d66?q=80&w=1080&auto=format&fit=crop" alt="Committee floor debate" loading="lazy">
+        </figure>
+        <figure class="gallery-item" role="listitem">
+          <img src="https://images.unsplash.com/photo-1540574163026-643ea20ade25?q=80&w=1080&auto=format&fit=crop" alt="Award ceremony" loading="lazy">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+<!-- Contact -->
+<section id="contact" aria-labelledby="contact-title">
+  <div class="container">
+    <div class="section-head">
+      <h2 id="contact-title">Contact</h2>
+      <div class="rule" aria-hidden="true"></div>
+      <span class="accent">Reach us • Stay connected</span>
+    </div>
+
+    <div class="contact" style="display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center;">
+<!-- Contact Form -->
+<div class="contact-card" style="flex: 1 1 400px; min-width: 300px; max-width: 500px; background-color:#111; padding:2rem; border-radius:12px; display:flex;background-color:transparent; flex-direction:column; justify-content:space-between;">
+  <h3 style="color:#fff; margin-bottom:1.5rem;">Send us a Query</h3>
+  <form id="contactForm" action="https://formspree.io/f/mvzoqwbn" method="POST" style="display:flex; flex-direction:column; flex-grow:1; gap:1rem;">
+  <input type="text" name="name" placeholder="Name" required style="width:100%; padding:0.75rem; border-radius:8px; border:none; font-size:1rem;">
+  <input type="tel" name="number" placeholder="Phone Number" required style="width:100%; padding:0.75rem; border-radius:8px; border:none; font-size:1rem;">
+  <input type="email" name="email" placeholder="Email" required style="width:100%; padding:0.75rem; border-radius:8px; border:none; font-size:1rem;">
+  <textarea name="message" placeholder="Message" rows="5" required style="width:100%; padding:0.75rem; border-radius:8px; border:none; font-size:1rem; resize:none;"></textarea>
+  <button type="submit" style="background-color:#FFD700; color:#000; border:none; padding:0.75rem; border-radius:8px; cursor:pointer; font-size:1rem;">Send Message</button>
+  <p id="formMessage" style="color:#fff; margin-top:1rem; display:none;">Message received! We will get back to you soon.</p>
+</form>
+<script>
+ const contactForm = document.getElementById("contactForm");
+const formMessage = document.getElementById("formMessage");
+
+if (contactForm) {
+  contactForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(contactForm);
+
+    try {
+      const res = await fetch(contactForm.action, {
+        method: "POST",
+        body: formData,
+        headers: { "Accept": "application/json" }
+      });
+
+      if (res.ok) {
+        formMessage.style.display = "block";
+        formMessage.style.color = "lime";
+        contactForm.reset();
+      } else {
+        throw new Error();
+      }
+    } catch {
+      formMessage.style.display = "block";
+      formMessage.style.color = "red";
+      formMessage.innerText = "Failed to send message. Try again.";
+    }
+  });
+}
+
+</script>
+</div>
+
+<script>
+  
+  const form = document.getElementById("regForm");
+  const msg = document.getElementById("msg");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const inputs = form.querySelectorAll("input");
+
+    // Helper functions
+    const isValidEmail = (email) => email.includes("@");
+    const isValidPhone = (phone) => /^\d{10}$/.test(phone);
+
+    // Reset previous field styles
+    inputs.forEach(input => input.style.borderColor = "");
+
+    // Check all fields are filled
+    for (let i = 0; i < inputs.length; i++) {
+      if (inputs[i].value.trim() === "") {
+        inputs[i].style.borderColor = "red";
+        msg.style.color = "red";
+        msg.innerText = "Please fill out all required fields.";
+        return;
+      }
+    }
+
+    // Gather emails and phones
+    const emails = [inputs[1].value, inputs[4].value, inputs[7].value];
+    const phones = [inputs[2].value, inputs[5].value, inputs[8].value];
+
+    // Validate emails
+    for (let i = 0; i < emails.length; i++) {
+      if (!isValidEmail(emails[i])) {
+        inputs[i === 0 ? 1 : i === 1 ? 4 : 7].style.borderColor = "red";
+        msg.style.color = "red";
+        msg.innerText = `Email ${i + 1} is invalid. Must contain '@'.`;
+        return;
+      }
+    }
+
+    // emails are different
+    if (new Set(emails).size !== emails.length) {
+      msg.style.color = "red";
+      msg.innerText = "All emails must be different.";
+      return;
+    }
+
+    // Validate phones
+    for (let i = 0; i < phones.length; i++) {
+      if (!isValidPhone(phones[i])) {
+        inputs[i === 0 ? 2 : i === 1 ? 5 : 8].style.borderColor = "red";
+        msg.style.color = "red";
+        msg.innerText = `Phone number ${i + 1} is invalid. Must be 10 digits.`;
+        return;
+      }
+    }
+
+    // phones are different
+    if (new Set(phones).size !== phones.length) {
+      msg.style.color = "red";
+      msg.innerText = "All phone numbers must be different.";
+      return;
+    }
+
+    // Prepare data
+    const data = {
+      leader: { name: inputs[0].value, email: inputs[1].value, phone: inputs[2].value },
+      delegate1: { name: inputs[3].value, email: inputs[4].value, phone: inputs[5].value },
+      delegate2: { name: inputs[6].value, email: inputs[7].value, phone: inputs[8].value },
+      college: inputs[9].value,
+      committee: inputs[10].value,
+      time: new Date().toLocaleString()
+    };
+
+    try {
+      const res = await fetch("/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+      msg.style.color = "lime";
+      msg.innerText = result.message;
+      form.reset();
+
+    } catch (error) {
+      msg.style.color = "red";
+      msg.innerText = "Error submitting form. Please try again.";
+    }
+  });
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+
+hamburger.addEventListener('click', () => {
+  navLinks.classList.toggle('active');
+}
+);
+
+</script>
+
+
+      <!-- Location Map -->
+      <div class="contact-card" style="flex: 1 1 400px; min-width: 300px; max-width: 600px;background-color:transparent; border-radius:12px; overflow:hidden;">
+        <h3 style="margin-bottom:1rem;">Our Location</h3>
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3803.059126552245!2d78.41515037516982!3d17.599926983323957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb8ecfe1af26dd%3A0x65666fa3c4a256d2!2sInstitute%20of%20Aeronautical%20Engineering!5e0!3m2!1sen!2sin!4v1761156512865!5m2!1sen!2sin" 
+          width="100%" 
+          height="500" 
+          style="border:0; border-radius:12px;" 
+          allowfullscreen="" 
+          loading="lazy" 
+          referrerpolicy="no-referrer-when-downgrade" 
+          title="IARE College Location Map">
+        </iframe>
+      </div>
+
+    </div>
+  </div>
+
+<!-- Contacts of Team Members -->
+<div class="contact-card" style="width: 100%; max-width: 1137px; margin: 2rem auto; padding:1rem; background-color:transparent; border-radius:12px;">
+  <h3 style="color:#fff; margin-bottom:1rem;">Our Team</h3>
+  <div style="display: flex; flex-wrap: wrap; gap:1.5rem; justify-content: center;">
+
+    <div style="flex:1 1 45%; min-width:250px; background-color:#1a1a1a; padding:1rem; border-radius:12px; border:1px solid transparent; display:flex; flex-direction:column; justify-content:center; height:180px;">
+      <p><strong>Name:</strong> John Doe</p>
+      <p><strong>Phone:</strong> +91 90000 00001</p>
+      <p><strong>Email:</strong> john@example.com</p>
+      <p><strong>Designation:</strong> Coordinator</p>
+    </div>
+
+    <div style="flex:1 1 45%; min-width:250px; background-color:#1a1a1a; padding:1rem; border-radius:12px; border:1px solid transparent; display:flex; flex-direction:column; justify-content:center; height:180px;">
+      <p><strong>Name:</strong> Jane Smith</p>
+      <p><strong>Phone:</strong> +91 90000 00002</p>
+      <p><strong>Email:</strong> jane@example.com</p>
+      <p><strong>Designation:</strong> Manager</p>
+    </div>
+
+    <div style="flex:1 1 45%; min-width:250px; background-color:#1a1a1a; padding:1rem; border-radius:12px; border:1px solid transparent; display:flex; flex-direction:column; justify-content:center; height:180px;">
+      <p><strong>Name:</strong> Rahul Kumar</p>
+      <p><strong>Phone:</strong> +91 90000 00003</p>
+      <p><strong>Email:</strong> rahul@example.com</p>
+      <p><strong>Designation:</strong> PR Head</p>
+    </div>
+
+    <div style="flex:1 1 45%; min-width:250px; background-color:#1a1a1a; padding:1rem; border-radius:12px; border:1px solid transparent; display:flex; flex-direction:column; justify-content:center; height:180px;">
+      <p><strong>Name:</strong> Priya Reddy</p>
+      <p><strong>Phone:</strong> +91 90000 00004</p>
+      <p><strong>Email:</strong> priya@example.com</p>
+      <p><strong>Designation:</strong> Event Lead</p>
+    </div>
+
+    <div style="flex:1 1 45%; min-width:250px; background-color:#1a1a1a; padding:1rem; border-radius:12px; border:1px solid transparent; display:flex; flex-direction:column; justify-content:center; height:180px;">
+      <p><strong>Name:</strong> Karthik T</p>
+      <p><strong>Phone:</strong> +91 90000 00005</p>
+      <p><strong>Email:</strong> karthik@example.com</p>
+      <p><strong>Designation:</strong> Tech Head</p>
+    </div>
+
+    <div style="flex:1 1 45%; min-width:250px; background-color:#1a1a1a; padding:1rem; border-radius:12px; border:1px solid #333; display:flex; flex-direction:column; justify-content:center; height:180px;">
+      <p><strong>Name:</strong> Sneha V</p>
+      <p><strong>Phone:</strong> +91 90000 00006</p>
+      <p><strong>Email:</strong> sneha@example.com</p>
+      <p><strong>Designation:</strong> Logistics</p>
+    </div>
+
+  </div>
+</div>
+
+</section>
+
+  <!-- Footer -->
+<!-- Footer -->
+<footer role="contentinfo" aria-label="Footer" style="background-color:transparent; color:#fff; padding:3rem 0; margin-top:2rem;">
+  <div class="container" style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:2rem;">
+
+    <!-- Contact Info --> 
+    <div style="flex:1 1 250px; min-width:200px;">
+      <h3 style="margin-bottom:1rem;">Contact Us</h3>
+      <p>Email: <a href="mailto:info@iaremun.com" style="color:#FFD700; text-decoration:none;">info@iaremun.com</a></p>
+      <p>Phone: <a href="tel:+919000000000" style="color:#FFD700; text-decoration:none;">+91 90000 00000</a></p>
+      <p>Location: Institute of Aeronautical Engineering, Hyderabad, India</p>
+    </div>
+
+    <!-- Social Links -->
+    <div style="flex:1 1 250px; min-width:200px;margin-left: 20px;">
+      <h3 style="margin-bottom:1rem;">Follow Us</h3>
+      <div style="display:flex; gap:1rem;">
+        <a href="https://facebook.com" target="_blank" style="color:#FFD700; font-size:1.5rem;">
+    <i class="fab fa-facebook-f"></i>
+  </a>
+  <a href="https://twitter.com" target="_blank" style="color:#FFD700; font-size:1.5rem;">
+    <i class="fab fa-twitter"></i>
+  </a>
+  <a href="https://instagram.com" target="_blank" style="color:#FFD700; font-size:1.5rem;">
+    <i class="fab fa-instagram"></i>
+  </a>
+  <a href="https://linkedin.com" target="_blank" style="color:#FFD700; font-size:1.5rem;">
+    <i class="fab fa-linkedin-in"></i>
+  </a>
+      </div>
+      
+    </div>
+    <div class="logo">
+    <img src="images/favicon.png" alt="IARE MUN Logo" class="brand-logo" style="height:200px;">
+
+  </div>
+
+  </div>
+
+  <p style="text-align:center; margin-top:2rem; color:#AEAEAE;">© 2025 IARE Model United Nations. All Rights Reserved.</p>
+</footer>
+
+  <!-- Scripts -->
+  <script>
+    // Smooth performance: minimal JS, IntersectionObserver animations, and a lightweight particle canvas.
+
+    // Intersection Observer to reveal elements on scroll
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            if (entry.target.classList.contains('counter')) startCounter(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: '0px 0px -10% 0px', threshold: 0.15 }
+    );
+
+    document.querySelectorAll('.about-card, .board-card, .tl-item, .gallery-item, .why-card').forEach(el => observer.observe(el));
+
+    // Parallax subtle on hero title for a premium feel
+    const hero = document.querySelector('.hero');
+    const heroTitle = document.querySelector('.hero h1');
+    const heroSub = document.querySelector('.hero .sub');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      const damp = Math.min(1, y / 600);
+      heroTitle.style.transform = `translateY(${damp * 6}px)`;
+      heroSub.style.transform = `translateY(${damp * 10}px)`;
+      hero.style.backgroundPosition = `center ${damp * 8}px`;
+    });
+
+    // Canvas gold particle/light streak animation (subtle, low CPU)
+   (() => {
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let w, h, particles;
+  const density = Math.min(80, Math.max(40, Math.floor(window.innerWidth / 20)));
+  const color = 'rgba(212,175,55,'; // gold particle color
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+    particles = Array.from({ length: density }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.2,
+      vy: (Math.random() - 0.5) * 0.2,
+      r: Math.random() * 1.6 + 0.4,
+      a: Math.random() * 0.35 + 0.05
+    }));
+  }
+  window.addEventListener('resize', resize, { passive: true });
+  resize();
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h); // transparent background
+    for (let p of particles) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > w) p.vx *= -1;
+      if (p.y < 0 || p.y > h) p.vy *= -1;
+
+      // glow effect
+      ctx.beginPath();
+      ctx.fillStyle = color + p.a + ')';
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+
+      // occasional streak
+      if (Math.random() < 0.005) {
+        ctx.beginPath();
+        ctx.strokeStyle = color + (p.a * 0.6) + ')';
+        ctx.lineWidth = 0.6;
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p.x + p.vx * 60, p.y + p.vy * 60);
+        ctx.stroke();
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+
+    // Button ripple effect
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.addEventListener('click', (e) => {
+      const rect = submitBtn.getBoundingClientRect();
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      ripple.style.left = (e.clientX - rect.left) + 'px';
+      ripple.style.top = (e.clientY - rect.top) + 'px';
+      submitBtn.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+    });
+
+    // Basic registration form validation + success message (no backend; static)
+    const regForm = document.getElementById('regForm');
+    const successMsg = document.getElementById('successMsg');
+    regForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const valid = ['name','college','committee','email'].every(id => {
+        const el = document.getElementById(id);
+        if (!el.checkValidity() || !el.value.trim()) {
+          el.focus();
+          el.setAttribute('aria-invalid', 'true');
+          el.style.borderColor = 'rgba(255, 86, 86, 0.7)';
+          setTimeout(() => { el.style.borderColor = 'var(--gold)'; }, 400);
+          return false;
+        } else {
+          el.removeAttribute('aria-invalid');
+          return true;
+        }
+      });
+      if (!valid) return;
+
+      successMsg.style.display = 'block';
+      regForm.reset();
+      setTimeout(() => successMsg.style.display = 'none', 5000);
+    });
+
+    // Animated counters
+    function startCounter(el) {
+      const target = parseInt(el.getAttribute('data-target'), 10);
+      let current = 0;
+      const duration = 1200;
+      const start = performance.now();
+      function step(now) {
+        const p = Math.min(1, (now - start) / duration);
+        current = Math.floor(p * target);
+        el.textContent = current + '+';
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    // Reduce motion respect
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // Disable particle animation by pausing canvas via display none
+      document.getElementById('particles').style.display = 'none';
+      // Remove parallax transforms
+      window.removeEventListener('scroll', () => {});
+    }
+    
+  </script>
+  <script src="script.js" type="text/javascript" defer></script>
+  
+  <script>
+
+</script>
+
+
+</body>
+</html>
+
+</body>
+</html>
