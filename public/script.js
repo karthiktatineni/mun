@@ -1,98 +1,159 @@
+// ----- REAL COUNTRIES -----
+const countries = [
+  "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda",
+  "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain",
+  "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
+  "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria",
+  "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada",
+  "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros",
+  "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czechia",
+  "DR Congo", "Denmark", "Djibouti", "Dominica", "Dominican Republic",
+  "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia",
+  "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia",
+  "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau",
+  "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran"
+];
 
-  const form = document.getElementById("regForm");
-  const msg = document.getElementById("msg");
+// ----- COMMITTEES -----
+const committees = ["UNSC", "DISEC", "IP", "UNHRC"];
+let allocated = {};
+committees.forEach(c => allocated[c] = []);
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+// ----- AUTOCOMPLETE FUNCTION -----
+function setupAutocomplete(selector) {
+  document.querySelectorAll(selector).forEach(input => {
+    input.addEventListener("input", function() {
+      const val = this.value.toLowerCase();
+      const parent = this.parentNode;
 
-    const inputs = form.querySelectorAll("input");
+      const oldBox = parent.querySelector(".suggestions");
+      if (oldBox) oldBox.remove();
+      if (!val) return;
 
-    // Helper functions
-    const isValidEmail = (email) => email.includes("@");
-    const isValidPhone = (phone) => /^\d{10}$/.test(phone);
+      const selected = Array.from(document.querySelectorAll('input[name$="_country1"], input[name$="_country2"], input[name$="_country3"]'))
+        .map(i => i.value.toLowerCase())
+        .filter(v => v);
 
-    // Reset previous field styles
-    inputs.forEach(input => input.style.borderColor = "");
+      const matches = countries.filter(c => c.toLowerCase().startsWith(val) && !selected.includes(c.toLowerCase()));
+      if (!matches.length) return;
 
-    // Check all fields are filled
-    for (let i = 0; i < inputs.length; i++) {
-      if (inputs[i].value.trim() === "") {
-        inputs[i].style.borderColor = "red";
-        msg.style.color = "red";
-        msg.innerText = "Please fill out all required fields.";
-        return;
-      }
-    }
+      const box = document.createElement("div");
+      box.className = "suggestions";
+      box.style.position = "absolute";
+      box.style.background = "rgba(0,0,0,0.85)";
+      box.style.color = "silver";
+      box.style.zIndex = "1000";
+      box.style.width = "100%";
+      box.style.maxHeight = "150px";
+      box.style.overflowY = "auto";
+      box.style.borderRadius = "4px";
 
-    // Gather emails and phones
-    const emails = [inputs[1].value, inputs[4].value, inputs[7].value];
-    const phones = [inputs[2].value, inputs[5].value, inputs[8].value];
-
-    // Validate emails
-    for (let i = 0; i < emails.length; i++) {
-      if (!isValidEmail(emails[i])) {
-        inputs[i === 0 ? 1 : i === 1 ? 4 : 7].style.borderColor = "red";
-        msg.style.color = "red";
-        msg.innerText = `Email ${i + 1} is invalid. Must contain '@'.`;
-        return;
-      }
-    }
-
-    // emails are different
-    if (new Set(emails).size !== emails.length) {
-      msg.style.color = "red";
-      msg.innerText = "All emails must be different.";
-      return;
-    }
-
-    // Validate phones
-    for (let i = 0; i < phones.length; i++) {
-      if (!isValidPhone(phones[i])) {
-        inputs[i === 0 ? 2 : i === 1 ? 5 : 8].style.borderColor = "red";
-        msg.style.color = "red";
-        msg.innerText = `Phone number ${i + 1} is invalid. Must be 10 digits.`;
-        return;
-      }
-    }
-
-    // phones are different
-    if (new Set(phones).size !== phones.length) {
-      msg.style.color = "red";
-      msg.innerText = "All phone numbers must be different.";
-      return;
-    }
-
-    // Prepare data
-    const data = {
-      leader: { name: inputs[0].value, email: inputs[1].value, phone: inputs[2].value },
-      delegate1: { name: inputs[3].value, email: inputs[4].value, phone: inputs[5].value },
-      delegate2: { name: inputs[6].value, email: inputs[7].value, phone: inputs[8].value },
-      college: inputs[9].value,
-      committee: inputs[10].value,
-      time: new Date().toLocaleString()
-    };
-
-    try {
-      const res = await fetch("/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
+      matches.forEach(m => {
+        const div = document.createElement("div");
+        div.innerText = m;
+        div.style.padding = "5px 10px";
+        div.style.cursor = "pointer";
+        div.addEventListener("click", () => {
+          input.value = m;
+          box.remove();
+        });
+        box.appendChild(div);
       });
 
-      const result = await res.json();
-      msg.style.color = "lime";
-      msg.innerText = result.message;
-      form.reset();
+      parent.appendChild(box);
+    });
 
-    } catch (error) {
-      msg.style.color = "red";
-      msg.innerText = "Error submitting form. Please try again.";
-    }
+    input.addEventListener("blur", () => {
+      setTimeout(() => {
+        const box = input.parentNode.querySelector(".suggestions");
+        if (box) box.remove();
+      }, 200);
+    });
   });
-const hamburger = document.querySelector('.hamburger');
-const navLinks = document.querySelector('.nav-links');
-
-hamburger.addEventListener('click', () => {
-  navLinks.classList.toggle('active');
 }
-);
+
+// Apply autocomplete
+setupAutocomplete('input[name$="_country1"], input[name$="_country2"], input[name$="_country3"]');
+
+// ----- FORM SUBMIT -----
+document.getElementById("regForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  const msg = document.getElementById("msg");
+  msg.innerText = "";
+  msg.style.color = "red";
+
+  const name = this.name.value.trim();
+  const email = this.email.value.trim();
+  const phone = this.phone.value.trim();
+  const college = this.college.value.trim();
+  const muns = this.muns.value.trim();
+
+  // Validate
+  if (!name || !email || !phone || !college || !muns) {
+    msg.innerText = "Please fill all fields.";
+    return;
+  }
+
+  if (!email.includes("@")) {
+    msg.innerText = "Email must contain @.";
+    return;
+  }
+
+  if (!/^\d{10}$/.test(phone)) {
+    msg.innerText = "Phone number must be exactly 10 digits.";
+    return;
+  }
+
+  // Collect committee preferences
+  const prefs = [];
+  for (let i = 1; i <= 3; i++) {
+    const committee = this[`committee${i}`].value;
+    const countriesInput = [
+      this[`committee${i}_country1`].value.trim(),
+      this[`committee${i}_country2`].value.trim(),
+      this[`committee${i}_country3`].value.trim()
+    ];
+
+    if (!committee || countriesInput.some(c => !c)) {
+      msg.innerText = `Please select committee ${i} and all its countries.`;
+      return;
+    }
+
+    prefs.push({ committee, countries: countriesInput });
+  }
+
+  // Allocate countries without duplicates across same committee
+  const allocation = [];
+  prefs.forEach(pref => {
+    const chosen = [];
+    for (let c of pref.countries) {
+      if (!allocated[pref.committee].includes(c)) {
+        allocated[pref.committee].push(c);
+        chosen.push(c);
+      }
+    }
+    allocation.push({ committee: pref.committee, countries: chosen });
+  });
+
+  const payload = { name, email, phone, college, muns, allocation };
+
+  try {
+    const res = await fetch("/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+    if (data.message) {
+      msg.style.color = "green";
+      msg.innerText = data.message;
+      this.reset();
+    } else {
+      msg.innerText = "Failed to register. Try again.";
+    }
+  } catch (err) {
+    console.error(err);
+    msg.innerText = "Server error. Try again.";
+  }
+});

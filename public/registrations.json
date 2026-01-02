@@ -1,0 +1,163 @@
+[
+  {
+    "name": "a",
+    "email": "abcd@gmail.com",
+    "phone": "7896541230",
+    "college": "iare",
+    "muns": "1",
+    "allocation": [
+      {
+        "committee": "UNSC",
+        "countries": [
+          "Algeria",
+          "Angola",
+          "Andorra"
+        ]
+      },
+      {
+        "committee": "DISEC",
+        "countries": [
+          "Argentina",
+          "Armenia",
+          "Djibouti"
+        ]
+      },
+      {
+        "committee": "IP",
+        "countries": [
+          "Dominica",
+          "Australia",
+          "Antigua and Barbuda"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "saasd",
+    "email": "sdadsad@",
+    "phone": "7896541230",
+    "college": "sda",
+    "muns": "1",
+    "allocation": [
+      {
+        "committee": "UNSC",
+        "countries": [
+          "Algeria",
+          "Angola",
+          "Andorra"
+        ]
+      },
+      {
+        "committee": "DISEC",
+        "countries": [
+          "Afghanistan",
+          "Armenia",
+          "Djibouti"
+        ]
+      },
+      {
+        "committee": "IP",
+        "countries": [
+          "Argentina",
+          "Austria",
+          "Dominican Republic"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "karthik",
+    "email": "asdaSds@adsas",
+    "phone": "7995466261",
+    "college": "iare",
+    "muns": "2",
+    "allocation": [
+      {
+        "committee": "UNSC",
+        "countries": [
+          "Algeria",
+          "Angola",
+          "Antigua and Barbuda"
+        ]
+      },
+      {
+        "committee": "DISEC",
+        "countries": [
+          "Andorra",
+          "Armenia",
+          "Australia"
+        ]
+      },
+      {
+        "committee": "UNSC",
+        "countries": [
+          "Argentina",
+          "Azerbaijan",
+          "Djibouti"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "a",
+    "email": "sda@",
+    "phone": "1234567890",
+    "college": "a",
+    "muns": "2",
+    "allocation": [
+      {
+        "committee": "UNSC",
+        "countries": [
+          "Andorra"
+        ]
+      },
+      {
+        "committee": "DISEC",
+        "countries": [
+          "Argentina"
+        ]
+      },
+      {
+        "committee": "IP",
+        "countries": [
+          "Algeria",
+          "Azerbaijan",
+          "Austria"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "a",
+    "email": "sdA@",
+    "phone": "1234567890",
+    "college": "asd",
+    "muns": "2",
+    "allocation": [
+      {
+        "committee": "UNSC",
+        "countries": [
+          "Algeria",
+          "Djibouti",
+          "Angola"
+        ]
+      },
+      {
+        "committee": "DISEC",
+        "countries": [
+          "Dominican Republic",
+          "Antigua and Barbuda",
+          "Argentina"
+        ]
+      },
+      {
+        "committee": "IP",
+        "countries": [
+          "Denmark",
+          "Armenia",
+          "Andorra"
+        ]
+      }
+    ]
+  }
+]

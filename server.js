@@ -14,7 +14,7 @@ app.get("/", (req, res) => {
 });
 
 
-const DATA_FILE = "registrations.json";
+const DATA_FILE = "./public/registrations.json";
 const EXPORT_DIR = "exports";
 
 // Ensure files/folders exist

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MUN Allocation Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #111; color: #fff; margin: 0; padding: 0; }
+    header { padding: 15px; background: #222; display: flex; justify-content: space-between; align-items: center; }
+    h1 { margin: 0; font-size: 22px; color: gold; }
+    button { padding: 8px 12px; margin-left: 5px; cursor: pointer; }
+
+    .committee { margin: 20px; background: #222; border-radius: 8px; padding: 10px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { padding: 8px; border: 1px solid #444; text-align: left; }
+    th { background: #333; }
+    td { background: #111; }
+
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>IARE MUN – Allocation Dashboard</h1>
+  <input type="password" id="password" placeholder="Admin Password">
+  <button onclick="login()">Login</button>
+  <button onclick="refreshAllocation()">🔄 Refresh</button>
+</header>
+
+<div id="dashboardContent" class="hidden">
+  <div id="allocationPanel"></div>
+</div>
+
+<script>
+let cachedPassword = "";
+const committees = ["UNSC","DISEC","IP","UNHRC"];
+let allocated = {}; // {committee: {country: delegateName}}
+
+async function login() {
+  cachedPassword = document.getElementById("password").value;
+  const res = await fetch("/admin/data", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ password: cachedPassword })
+  });
+  if (!res.ok) { alert("Wrong password"); return; }
+
+  document.getElementById("dashboardContent").classList.remove("hidden");
+  loadAllocation();
+}
+
+async function loadAllocation() {
+  const res = await fetch("/admin/data", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ password: cachedPassword })
+  });
+  const data = await res.json();
+  allocateDelegates(data);
+  renderAllocation();
+}
+
+function allocateDelegates(data) {
+  // reset
+  committees.forEach(c => allocated[c] = {});
+
+  data.forEach(r => {
+    r.preferences?.forEach(pref => {
+      pref.countries.forEach(country => {
+        if (!allocated[pref.committee][country]) {
+          allocated[pref.committee][country] = r.name; // assign delegate
+        }
+      });
+    });
+  });
+}
+
+function renderAllocation() {
+  const panel = document.getElementById("allocationPanel");
+  panel.innerHTML = "";
+
+  committees.forEach(c => {
+    panel.innerHTML += `<div class="committee"><h2>${c}</h2><table>
+      <thead><tr><th>Country</th><th>Allocated Delegate</th></tr></thead><tbody>`;
+
+    const countries = Object.keys(allocated[c]);
+    if (countries.length === 0) {
+      panel.innerHTML += `<tr><td colspan="2">No allocations</td></tr>`;
+    } else {
+      countries.sort();
+      countries.forEach(country => {
+        const name = allocated[c][country] || "";
+        panel.innerHTML += `<tr><td>${country}</td><td>${name}</td></tr>`;
+      });
+    }
+
+    panel.innerHTML += `</tbody></table></div>`;
+  });
+}
+
+async function refreshAllocation() {
+  if (cachedPassword) loadAllocation();
+}
+
+// Auto-refresh every 15s
+setInterval(() => { if(cachedPassword) loadAllocation(); }, 15000);
+</script>
+</body>
+</html>

@@ -2,12 +2,154 @@
 <html>
 <head>
   <title>MUN Admin Panel</title>
-  <link rel="stylesheet" href="style.css">
-
   <style>
-    body { font-family: Arial, sans-serif; }
+    body { 
+      font-family: Arial, sans-serif; 
+      margin: 0;
+      background: #0a0a0a;
+      color: #fff;
+    }
 
     .hidden { display: none; }
+
+    .login-box {
+      max-width: 400px;
+      margin: 100px auto;
+      background: #1a1a1a;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+      text-align: center;
+      border: 1px solid #333;
+    }
+
+    .login-box h2 {
+      color: gold;
+      margin-bottom: 20px;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: 1px solid #444;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 14px;
+      background: #222;
+      color: #fff;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background: gold;
+      color: #111;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .login-box button:hover {
+      background: #ffed4e;
+    }
+
+    #adminContent {
+      padding: 20px;
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #1a1a1a;
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border: 1px solid #333;
+    }
+
+    .admin-header h1 {
+      margin: 0;
+      color: gold;
+    }
+
+    .admin-header button {
+      padding: 10px 20px;
+      margin-left: 10px;
+      background: gold;
+      color: #111;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .admin-header button:hover {
+      background: #ffed4e;
+    }
+
+    .stats {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      flex: 1;
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      text-align: center;
+      border: 1px solid #333;
+    }
+
+    .stat-card h3 {
+      margin: 0;
+      font-size: 36px;
+      color: gold;
+    }
+
+    .stat-card p {
+      margin: 10px 0 0 0;
+      color: #aaa;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .tab-btn {
+      padding: 12px 24px;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    .tab-btn.active {
+      background: gold;
+      color: #111;
+      border-color: gold;
+    }
+
+    .tab-content {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      border: 1px solid #333;
+    }
 
     table {
       width: 100%;
@@ -16,8 +158,8 @@
     }
 
     th, td {
-      padding: 10px;
-      border: 1px solid #ccc;
+      padding: 12px;
+      border: 1px solid #333;
       text-align: left;
     }
 
@@ -25,28 +167,55 @@
       cursor: pointer;
       background: #111;
       color: gold;
+      font-weight: bold;
     }
 
     th:hover {
       background: #222;
     }
 
-    .login-box {
-      max-width: 300px;
-      margin: 100px auto;
-      text-align: center;
+    td {
+      background: #1a1a1a;
+      color: #ddd;
     }
 
-    .login-box input, .login-box button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
+    tr:hover td {
+      background: #222;
     }
 
-    .admin-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .allocated-badge {
+      background: green;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .pending-badge {
+      background: orange;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .preferences-text {
+      font-size: 11px;
+      color: #666;
+      line-height: 1.4;
+    }
+
+    h2 {
+      color: gold;
+      border-bottom: 2px solid gold;
+      padding-bottom: 10px;
+      margin-top: 30px;
+    }
+
+    .committee-section {
+      margin-bottom: 40px;
     }
   </style>
 </head>
@@ -55,8 +224,8 @@
 
 <!-- LOGIN -->
 <div class="login-box" id="loginBox">
-  <h2>Admin Login</h2>
-  <input type="password" id="password" placeholder="Admin Password">
+  <h2>🔐 Admin Login</h2>
+  <input type="password" id="password" placeholder="Enter Admin Password">
   <button onclick="login()">Login</button>
 </div>
 
@@ -64,134 +233,314 @@
 <div id="adminContent" class="hidden">
 
   <div class="admin-header">
-    <h1>IARE MUN – Registrations</h1>
-    <button onclick="exportExcel()">Export to Excel</button>
-    <button onclick="refreshData()">🔄 Refresh</button>
+    <h1>🎓 MUN Admin Panel - Delegate Allocations</h1>
+    <div>
+      <button onclick="refreshData()">🔄 Refresh</button>
+      <button onclick="exportData()">📊 Export</button>
+    </div>
   </div>
 
-  <table id="dataTable">
-<thead>
-  <tr>
-    <th onclick="sortTable(0)">Leader Name</th>
-    <th onclick="sortTable(1)">Leader Email</th>
-    <th onclick="sortTable(2)">Leader Phone</th>
+  <div class="stats">
+    <div class="stat-card">
+      <h3 id="totalDelegates">0</h3>
+      <p>Total Delegates</p>
+    </div>
+    <div class="stat-card">
+      <h3 id="totalAllocated">0</h3>
+      <p>Allocated</p>
+    </div>
+    <div class="stat-card">
+      <h3 id="totalPending">0</h3>
+      <p>Pending</p>
+    </div>
+  </div>
 
-    <th onclick="sortTable(3)">Delegate 1 Name</th>
-    <th onclick="sortTable(4)">Delegate 1 Email</th>
-    <th onclick="sortTable(5)">Delegate 1 Phone</th>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('allDelegates', event)">All Delegates</button>
+    <button class="tab-btn" onclick="showTab('allocations', event)">Allocated Delegates</button>
+    <button class="tab-btn" onclick="showTab('dashboard', event)">Full Dashboard</button>
+  </div>
 
-    <th onclick="sortTable(6)">Delegate 2 Name</th>
-    <th onclick="sortTable(7)">Delegate 2 Email</th>
-    <th onclick="sortTable(8)">Delegate 2 Phone</th>
+  <!-- All Delegates Tab -->
+  <div id="allDelegates" class="tab-content">
+    <table id="delegatesTable">
+      <thead>
+        <tr>
+          <th onclick="sortTable(0)">Name</th>
+          <th onclick="sortTable(1)">Email</th>
+          <th onclick="sortTable(2)">Phone</th>
+          <th onclick="sortTable(3)">College</th>
+          <th onclick="sortTable(4)">MUNs</th>
+          <th>Preferences</th>
+          <th>Status</th>
+          <th>Allocated To</th>
+        </tr>
+      </thead>
+      <tbody id="delegatesBody"></tbody>
+    </table>
+  </div>
 
-    <th onclick="sortTable(9)">College</th>
-    <th onclick="sortTable(10)">Committee</th>
-    <th onclick="sortTable(11)">Time</th>
-  </tr>
-</thead>
+  <!-- Allocations Tab -->
+  <div id="allocations" class="tab-content hidden">
+    <div id="allocationsPanel"></div>
+  </div>
 
-    <tbody id="output"></tbody>
-  </table>
+  <!-- Dashboard Tab -->
+  <div id="dashboard" class="tab-content hidden">
+    <div id="dashboardPanel"></div>
+  </div>
 
 </div>
 
 <script>
 let cachedPassword = "";
 let sortDir = true;
+let delegates = [];
+let allocations = {};
 
-async function login() {
-  cachedPassword = document.getElementById("password").value;
+const committees = ["UNSC", "DISEC", "IP", "UNHRC"];
+const countries = [
+  "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan",
+  "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia",
+  "Bosnia", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada",
+  "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus",
+  "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Eritrea", "Estonia",
+  "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana",
+  "Greece", "Grenada", "Guatemala", "Guinea", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India",
+  "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan"
+];
 
-  const res = await fetch("/admin/data", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ password: cachedPassword })
+// Initialize allocations
+function initAllocations() {
+  allocations = {};
+  committees.forEach(committee => {
+    allocations[committee] = {};
+    countries.forEach(country => {
+      allocations[committee][country] = null;
+    });
   });
+}
 
-  if (!res.ok) {
-    alert("Wrong password");
+// Login function
+async function login() {
+  const password = document.getElementById("password").value;
+
+  if (!password || password.length < 3) {
+    alert("Please enter a valid password");
     return;
   }
 
-  document.getElementById("loginBox").classList.add("hidden");
-  document.getElementById("adminContent").classList.remove("hidden");
+  try {
+    const res = await fetch("/admin/data", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password })
+    });
 
-  loadData();
+    if (!res.ok) throw new Error("Invalid password");
+
+    const data = await res.json();
+
+    // Show admin content only on successful login
+    document.getElementById("loginBox").classList.add("hidden");
+    document.getElementById("adminContent").classList.remove("hidden");
+
+    cachedPassword = password;
+    delegates = [];
+    initAllocations();
+
+    data.forEach((registration, index) => {
+      const delegate = {
+        id: Date.now() + index,
+        name: registration.name,
+        email: registration.email,
+        phone: registration.phone,
+        college: registration.college,
+        muns: parseInt(registration.muns) || 0,
+        preferences: registration.allocation || [],
+        allocation: null,
+        timestamp: registration.time || new Date().toISOString()
+      };
+      delegates.push(delegate);
+    });
+
+    delegates.sort((a, b) => b.muns - a.muns);
+    delegates.forEach(delegate => delegate.allocation = allocateDelegate(delegate));
+
+    updateStats();
+    renderAllDelegates();
+    renderAllocations();
+    renderDashboard();
+
+  } catch (error) {
+    alert("❌ Login failed: " + error.message);
+    console.error("Login error:", error);
+  }
 }
 
+// Load data from JSON (used by refresh & auto-refresh)
 async function loadData() {
-  const res = await fetch("/admin/data", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ password: cachedPassword })
-  });
+  try {
+    const res = await fetch("/registrations.json");
+    if (!res.ok) throw new Error("Failed to load registrations.json");
+    const data = await res.json();
 
-  const data = await res.json();
-  renderTable(data);
+    delegates = [];
+    initAllocations();
+    data.forEach((registration, index) => {
+      const delegate = {
+        id: Date.now() + index,
+        name: registration.name,
+        email: registration.email,
+        phone: registration.phone,
+        college: registration.college,
+        muns: parseInt(registration.muns) || 0,
+        preferences: registration.allocation || [],
+        allocation: null,
+        timestamp: registration.time || new Date().toISOString()
+      };
+      delegates.push(delegate);
+    });
+
+    delegates.sort((a, b) => b.muns - a.muns);
+    delegates.forEach(delegate => delegate.allocation = allocateDelegate(delegate));
+
+    updateStats();
+    renderAllDelegates();
+    renderAllocations();
+    renderDashboard();
+  } catch (error) {
+    console.error("Error loading data:", error);
+    document.getElementById("allDelegates").innerHTML = `<p style="color: red;">Error loading data: ${error.message}</p>`;
+  }
 }
 
-function renderTable(data) {
-  const tbody = document.getElementById("output");
+// Allocation logic
+function allocateDelegate(delegate) {
+  let allocated = null;
+  for (let pref of delegate.preferences) {
+    const { committee, countries: prefCountries } = pref;
+    for (let country of prefCountries) {
+      const current = allocations[committee][country];
+      if (!current || delegate.muns > current.muns) {
+        if (current) {
+          const displaced = delegates.find(d => d.id === current.delegateId);
+          if (displaced) displaced.allocation = null;
+        }
+        allocations[committee][country] = {
+          delegateId: delegate.id,
+          name: delegate.name,
+          muns: delegate.muns,
+          email: delegate.email,
+          phone: delegate.phone,
+          college: delegate.college
+        };
+        allocated = { committee, country };
+        break;
+      }
+    }
+    if (allocated) break;
+  }
+  return allocated;
+}
+
+// Stats, rendering, sorting, tabs, refresh, export
+function updateStats() {
+  document.getElementById("totalDelegates").textContent = delegates.length;
+  const allocated = delegates.filter(d => d.allocation).length;
+  document.getElementById("totalAllocated").textContent = allocated;
+  document.getElementById("totalPending").textContent = delegates.length - allocated;
+}
+
+function renderAllDelegates() {
+  const tbody = document.getElementById("delegatesBody");
   tbody.innerHTML = "";
-
-  data.forEach(r => {
-    tbody.innerHTML += `
-      <tr>
-        <td>${r.leader?.name || ""}</td>
-        <td>${r.leader?.email || ""}</td>
-        <td>${r.leader?.phone || ""}</td>
-
-        <td>${r.delegate1?.name || ""}</td>
-        <td>${r.delegate1?.email || ""}</td>
-        <td>${r.delegate1?.phone || ""}</td>
-
-        <td>${r.delegate2?.name || ""}</td>
-        <td>${r.delegate2?.email || ""}</td>
-        <td>${r.delegate2?.phone || ""}</td>
-
-        <td>${r.college || ""}</td>
-        <td>${r.committee || ""}</td>
-        <td>${r.time || ""}</td>
-      </tr>
-    `;
+  delegates.forEach(delegate => {
+    const status = delegate.allocation ? '<span class="allocated-badge">Allocated</span>' : '<span class="pending-badge">Pending</span>';
+    const allocation = delegate.allocation ? `${delegate.allocation.committee} - ${delegate.allocation.country}` : 'Not allocated';
+    const prefsText = delegate.preferences.map((p,i) => `${i+1}. ${p.committee}: ${p.countries.join(', ')}`).join('<br>');
+    tbody.innerHTML += `<tr>
+      <td>${delegate.name}</td>
+      <td>${delegate.email}</td>
+      <td>${delegate.phone}</td>
+      <td>${delegate.college}</td>
+      <td><strong>${delegate.muns}</strong></td>
+      <td class="preferences-text">${prefsText}</td>
+      <td>${status}</td>
+      <td><strong>${allocation}</strong></td>
+    </tr>`;
   });
+}
+
+function renderAllocations() {
+  const panel = document.getElementById("allocationsPanel");
+  let html = "";
+  committees.forEach(c => {
+    html += `<div class="committee-section"><h2>${c}</h2><table><thead><tr>
+      <th>Country</th><th>Delegate</th><th>Email</th><th>Phone</th><th>College</th><th>MUNs</th>
+    </tr></thead><tbody>`;
+    let hasAlloc = false;
+    countries.forEach(country => {
+      const alloc = allocations[c][country];
+      if (alloc) {
+        html += `<tr>
+          <td>${country}</td><td>${alloc.name}</td><td>${alloc.email}</td><td>${alloc.phone}</td><td>${alloc.college}</td><td>${alloc.muns}</td>
+        </tr>`;
+        hasAlloc = true;
+      }
+    });
+    if (!hasAlloc) html += `<tr><td colspan="6">No allocations yet</td></tr>`;
+    html += `</tbody></table></div>`;
+  });
+  panel.innerHTML = html;
+}
+
+function renderDashboard() {
+  const panel = document.getElementById("dashboardPanel");
+  let html = "";
+  committees.forEach(c => {
+    html += `<div class="committee-section"><h2>${c}</h2><table><thead><tr>
+      <th>Country</th><th>Delegate</th><th>MUNs</th>
+    </tr></thead><tbody>`;
+    countries.forEach(country => {
+      const alloc = allocations[c][country];
+      html += `<tr>
+        <td>${country}</td><td>${alloc ? alloc.name : '-'}</td><td>${alloc ? alloc.muns : '-'}</td>
+      </tr>`;
+    });
+    html += `</tbody></table></div>`;
+  });
+  panel.innerHTML = html;
 }
 
 function sortTable(colIndex) {
-  const table = document.getElementById("dataTable");
-  const rows = Array.from(table.rows).slice(1);
-
+  const table = document.getElementById("delegatesTable");
+  const rows = Array.from(table.querySelectorAll("tbody tr"));
   sortDir = !sortDir;
-
-  rows.sort((a, b) => {
-    const A = a.cells[colIndex].innerText.toLowerCase();
-    const B = b.cells[colIndex].innerText.toLowerCase();
-    return sortDir ? A.localeCompare(B) : B.localeCompare(A);
+  rows.sort((a,b)=>{
+    let aVal = a.cells[colIndex].innerText;
+    let bVal = b.cells[colIndex].innerText;
+    if(colIndex===4){ aVal=parseInt(aVal)||0; bVal=parseInt(bVal)||0; return sortDir ? aVal-bVal : bVal-aVal;}
+    return sortDir ? aVal.localeCompare(bVal) : bVal.localeCompare(aVal);
   });
-
-  rows.forEach(row => table.tBodies[0].appendChild(row));
+  const tbody = table.querySelector("tbody");
+  tbody.innerHTML = "";
+  rows.forEach(r=>tbody.appendChild(r));
 }
 
-async function exportExcel() {
-  const res = await fetch("/admin/export", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ password: cachedPassword })
-  });
+function showTab(tabName,event){
+  document.querySelectorAll(".tab-content").forEach(tab=>tab.classList.add("hidden"));
+  document.getElementById(tabName).classList.remove("hidden");
+  document.querySelectorAll(".tab-btn").forEach(btn=>btn.classList.remove("active"));
+  if(event) event.currentTarget.classList.add("active");
+}
 
-  const result = await res.json();
-  alert(result.message);
-}
-async function refreshData() {
-  await loadData();
-}
-setInterval(() => {
-  if (cachedPassword) {
-    loadData();
-  }
-}, 10000); // refresh every 10 seconds
+async function refreshData(){ await loadData(); }
+function exportData(){ alert("Export functionality - Would export current allocations to Excel/CSV"); }
+
+// Auto-refresh every 10 sec
+setInterval(()=>{ if(cachedPassword) loadData(); }, 10000);
 
 </script>
-
 </body>
 </html>

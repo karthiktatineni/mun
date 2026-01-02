@@ -228,7 +228,7 @@
     </div>
   </section>
 
-<!-- Registration -->
+<<!-- Registration -->
 <section id="register" aria-labelledby="register-title">
   <div class="container">
 
@@ -240,54 +240,68 @@
 
     <form class="form" id="regForm" novalidate aria-describedby="regHelp">
 
-  <div class="full" id="regHelp" style="margin-bottom:10px;color:#AEAEAE;">
-    Team size: 1 Leader + up to 2 Delegates
-  </div>
+      <div class="input-grid">
+        <h2>Delegate Registration</h2>
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="text" name="phone" placeholder="Phone" required>
+        <input type="text" name="college" placeholder="College" required>
+        <input type="number" name="muns" placeholder="Number of MUNs Attended" required>
+      </div>
 
-  <div class="input-grid">
+      <div class="committee-preferences">
+        <h3>Committee Preferences (choose 3 committees and 3 countries each)</h3>
 
-    <!-- Leader Heading -->
-    <div class="grid-heading">LEADER INFO</div>
+        <div class="committee-block">
+          <select name="committee1" required>
+            <option value="">Select Committee</option>
+            <option value="UNSC">UNSC</option>
+            <option value="DISEC">DISEC</option>
+            <option value="IP">IP</option>
+            <option value="UNHRC">UNHRC</option>
+          </select>
+          <input type="text" name="committee1_country1" placeholder="Country 1" required>
+          <input type="text" name="committee1_country2" placeholder="Country 2" required>
+          <input type="text" name="committee1_country3" placeholder="Country 3" required>
+        </div>
 
-    <!-- Leader -->
-    <input type="text" placeholder="Leader Name" required>
-    <input type="email" placeholder="Leader Email" required>
-    <input type="tel" placeholder="Leader Phone Number" required>
+        <div class="committee-block">
+          <select name="committee2" required>
+            <option value="">Select Committee</option>
+            <option value="UNSC">UNSC</option>
+            <option value="DISEC">DISEC</option>
+            <option value="IP">IP</option>
+            <option value="UNHRC">UNHRC</option>
+          </select>
+          <input type="text" name="committee2_country1" placeholder="Country 1" required>
+          <input type="text" name="committee2_country2" placeholder="Country 2" required>
+          <input type="text" name="committee2_country3" placeholder="Country 3" required>
+        </div>
 
-    <!-- Delegate 1 Heading -->
-    <div class="grid-heading">DELEGATE 1</div>
+        <div class="committee-block">
+          <select name="committee3" required>
+            <option value="">Select Committee</option>
+            <option value="UNSC">UNSC</option>
+            <option value="DISEC">DISEC</option>
+            <option value="IP">IP</option>
+            <option value="UNHRC">UNHRC</option>
+          </select>
+          <input type="text" name="committee3_country1" placeholder="Country 1" required>
+          <input type="text" name="committee3_country2" placeholder="Country 2" required>
+          <input type="text" name="committee3_country3" placeholder="Country 3" required>
+        </div>
+      </div>
 
-    <!-- Delegate 1 -->
-    <input type="text" placeholder="Delegate 1 Name">
-    <input type="email" placeholder="Delegate 1 Email">
-    <input type="tel" placeholder="Delegate 1 Phone Number" required>
+      <div class="submit-wrapper">
+        <button type="submit" class="submit-btn">submit</button>
+      </div>
 
-    <!-- Delegate 2 Heading -->
-    <div class="grid-heading">DELEGATE 2</div>
-
-    <!-- Delegate 2 -->
-    <input type="text" placeholder="Delegate 2 Name">
-    <input type="email" placeholder="Delegate 2 Email">
-<input type="tel" placeholder="Delegate 2 Phone Number" required>
-    <!-- Common Heading -->
-    <div class="grid-heading">COMMON DETAILS</div>
-
-    <!-- Common -->
-    <input type="text" placeholder="College Name" required>
-    <input type="text" placeholder="Committee Preference" required>
-
-  </div>
-
-  <div class="submit-wrapper">
-    <button type="submit" class="submit-btn">submit</button>
-  </div>
-
-  <p id="msg"></p>
-</form>
-
+      <p id="msg"></p>
+    </form>
 
   </div>
 </section>
+
 
 
 
