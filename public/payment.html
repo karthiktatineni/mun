@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MUN IARE – Payment</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: #0b0b0b;
+      color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .payment-box {
+      background: #111;
+      padding: 25px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 0 18px rgba(212,175,55,0.25);
+    }
+
+    h2 {
+      color: #d4af37;
+      margin-bottom: 10px;
+    }
+
+    .info {
+      font-size: 14px;
+      color: #b0b0b0;
+      margin-bottom: 15px;
+    }
+
+    #qr {
+      width: 220px;
+      height: 220px;
+      margin: 20px auto;
+      background: #fff;
+      padding: 8px;
+      border-radius: 8px;
+    }
+
+    #qr canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 12px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background: #d4af37;
+      color: #000;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #c9a227;
+    }
+
+    .note {
+      margin-top: 12px;
+      font-size: 13px;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="payment-box">
+    <h2>MUN IARE – Registration Fee</h2>
+
+    <p class="info">
+      Scan the QR code and complete the payment.<br>
+      After payment, enter your UPI Transaction ID (UTR).
+    </p>
+
+    <!-- QR CODE CONTAINER -->
+    <div id="qr"></div>
+
+    <p class="info">
+      Amount: <b>₹1</b><br>
+      Reference: <b id="refId"></b>
+    </p>
+
+    <input
+      type="text"
+      id="utr"
+      placeholder="Enter UPI Transaction ID (UTR)"
+    >
+
+    <button onclick="submitPayment()">Submit Payment</button>
+<div id="paymentReceipt" style="display:none; margin-top:20px; padding:15px; background:#1a1a1a; border-radius:8px; color:#fff;">
+  <h3>Payment Receipt</h3>
+  <p><b>Reference ID:</b> <span id="recRef"></span></p>
+  <p><b>UTR:</b> <span id="recUTR"></span></p>
+  <p><b>Date:</b> <span id="recDate"></span></p>
+</div>
+
+
+    <p class="note">
+      Your registration confirmation mail will be sent after payment verification.
+
+    </p>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="payment.js" defer></script>
+
+</body>
+</html>

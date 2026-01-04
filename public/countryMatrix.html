@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Country Matrix - MUN IARE</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      margin: 20px;
+      background: #0a0a0a;
+      color: #fff;
+    }
+
+    h1 { 
+      color: gold; 
+      text-align: center; 
+      margin-bottom: 30px;
+    }
+
+    .committee-section {
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      color: gold;
+      border-bottom: 2px solid gold;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #333;
+      text-align: left;
+    }
+
+    th {
+      background: #111;
+      color: rgb(166, 167, 160);
+      font-weight: bold;
+    }
+
+    td {
+      background: #1a1a1a;
+      color: #ddd;
+    }
+
+    tr:hover td {
+      background: #222;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🌐 MUN IARE - Country Allocation Matrix</h1>
+
+<div id="matrixContainer"></div>
+
+<script>
+// Committees and countries same as admin
+const committees = ["UNSC", "DISEC", "IP", "UNHRC"];
+const countries = [
+  "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan",
+  "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia",
+  "Bosnia", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada",
+  "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus",
+  "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Eritrea", "Estonia",
+  "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana",
+  "Greece", "Grenada", "Guatemala", "Guinea", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India",
+  "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan"
+];
+
+let delegates = [];
+let allocations = {};
+
+// Initialize allocations
+function initAllocations() {
+  allocations = {};
+  committees.forEach(committee => {
+    allocations[committee] = {};
+    countries.forEach(country => {
+      allocations[committee][country] = null;
+    });
+  });
+}
+
+// Fetch registrations and build allocations
+async function loadData() {
+  try {
+    const res = await fetch("/registrations.json");
+    if(!res.ok) throw new Error("Failed to load registrations.json");
+    const data = await res.json();
+
+    delegates = [];
+    initAllocations();
+
+    data.forEach((registration, index) => {
+      const delegate = {
+        id: Date.now() + index,
+        name: registration.name,
+        email: registration.email,
+        phone: registration.phone,
+        college: registration.college,
+        muns: parseInt(registration.muns) || 0,
+        preferences: registration.allocation || [],
+        allocation: null
+      };
+      delegates.push(delegate);
+    });
+
+    // Sort delegates by MUNs
+    delegates.sort((a,b) => b.muns - a.muns);
+
+    // Allocate delegates
+    delegates.forEach(delegate => {
+      delegate.allocation = allocateDelegate(delegate);
+    });
+
+    renderMatrix();
+  } catch(err) {
+    console.error(err);
+    document.getElementById("matrixContainer").innerHTML = `<p style="color:red;">Error loading data: ${err.message}</p>`;
+  }
+}
+
+// Allocation logic (same as admin)
+function allocateDelegate(delegate) {
+  let allocated = null;
+  for (let pref of delegate.preferences) {
+    const { committee, countries: prefCountries } = pref;
+    for (let country of prefCountries) {
+      const current = allocations[committee][country];
+      if (!current || delegate.muns > current.muns) {
+        if (current) {
+          const displaced = delegates.find(d => d.id === current.delegateId);
+          if (displaced) displaced.allocation = null;
+        }
+        allocations[committee][country] = {
+          delegateId: delegate.id,
+          name: delegate.name,
+          email: delegate.email,
+          phone: delegate.phone,
+          college: delegate.college,
+          muns: delegate.muns
+        };
+        allocated = { committee, country };
+        break;
+      }
+    }
+    if (allocated) break;
+  }
+  return allocated;
+}
+
+// Render the country matrix
+function renderMatrix() {
+  const container = document.getElementById("matrixContainer");
+  let html = "";
+
+  committees.forEach(c => {
+    html += `<div class="committee-section"><h2>${c}</h2><table>
+      <thead><tr><th>Country</th><th>Delegate</th><th>MUNs</th></tr></thead><tbody>`;
+    countries.forEach(country => {
+      const alloc = allocations[c][country];
+      html += `<tr>
+        <td>${country}</td>
+        <td>${alloc ? alloc.name : '-'}</td>
+        <td>${alloc ? alloc.muns : '-'}</td>
+      </tr>`;
+    });
+    html += `</tbody></table></div>`;
+  });
+
+  container.innerHTML = html;
+}
+
+// Auto-load on page load
+window.onload = loadData;
+</script>
+
+</body>
+</html>

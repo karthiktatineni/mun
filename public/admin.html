@@ -254,12 +254,50 @@
       <p>Pending</p>
     </div>
   </div>
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('allDelegates', event)">All Delegates</button>
+  <button class="tab-btn" onclick="showTab('allocations', event)">Allocated Delegates</button>
+  <button class="tab-btn" onclick="showTab('dashboard', event)">Full Dashboard</button>
+  <button class="tab-btn" onclick="showTab('payments', event)">Payment Details</button>
+  <button class="tab-btn" onclick="showTab('verifiedPayments', event)">Verified Payments</button>
+  <button class="tab-btn" onclick="showTab('searchDelegates', event)">Search Delegates</button>
 
-  <div class="tabs">
-    <button class="tab-btn active" onclick="showTab('allDelegates', event)">All Delegates</button>
-    <button class="tab-btn" onclick="showTab('allocations', event)">Allocated Delegates</button>
-    <button class="tab-btn" onclick="showTab('dashboard', event)">Full Dashboard</button>
-  </div>
+</div>
+<!-- Search Delegates Tab -->
+<div id="searchDelegates" class="tab-content hidden">
+  <h2>🔍 Search Delegates</h2>
+  
+  <input type="text" id="delegateSearchTab" placeholder="Search by name, email, phone, college, reference ID, or payment status..." style="
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    border: 1px solid #333;
+    background: #222;
+    color: #fff;
+    box-sizing: border-box;
+    font-size: 14px;
+  " oninput="filterDelegatesTab()">
+
+  <table id="searchDelegatesTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>College</th>
+        <th>MUNs</th>
+        
+        <th>Status</th>
+        <th>Allocated To</th>
+        <th>Reference ID</th>
+        <th>Payment Status</th>
+      </tr>
+    </thead>
+    <tbody id="searchDelegatesBody"></tbody>
+  </table>
+</div>
+
 
   <!-- All Delegates Tab -->
   <div id="allDelegates" class="tab-content">
@@ -291,6 +329,187 @@
   </div>
 
 </div>
+<!-- Payment Details Tab -->
+<div id="payments" class="tab-content hidden">
+  <table id="paymentsTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Reference ID</th>
+        <th>UTR</th>
+        <th>Phone</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="paymentsBody"></tbody>
+  </table>
+</div>
+
+<!-- Verified Payments Tab -->
+<div id="verifiedPayments" class="tab-content hidden">
+  <table id="verifiedPaymentsTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Reference ID</th>
+        <th>UTR</th>
+        <th>Phone</th>
+        <th>Verified On</th>
+      </tr>
+    </thead>
+    <tbody id="verifiedPaymentsBody"></tbody>
+  </table>
+</div>
+
+<script>
+// Payments array (all payments stay here)
+let payments = []; 
+
+// Load payments from registrations.json
+async function loadPayments() {
+  try {
+    const res = await fetch("/registrations.json");
+    const data = await res.json();
+
+    payments = [];
+
+    data.forEach(reg => {
+      if (reg.payment) {
+        const paymentEntry = {
+  name: reg.name,
+  email: reg.email,
+  referenceId: reg.referenceId, // remove || "N/A"
+  utr: reg.payment.utr || "",
+  phone: reg.phone || "N/A",
+  status: reg.payment.status || "PENDING",
+  paidAt: reg.payment.paidAt || null,
+  verified: reg.payment.verified || false,
+  verifiedAt: reg.payment.verifiedAt || null
+};
+
+        payments.push(paymentEntry);
+      }
+    });
+
+    renderPayments();
+    renderVerifiedPayments();
+
+  } catch (err) {
+    console.error("Failed to load payments:", err);
+    document.getElementById("paymentsBody").innerHTML = `<tr><td colspan="7" style="color:red">Failed to load payments</td></tr>`;
+  }
+}
+
+// Render all payments (pending + verified)
+function renderPayments() {
+  const tbody = document.getElementById("paymentsBody");
+  tbody.innerHTML = "";
+  if (payments.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" style="color:#aaa;text-align:center">No payments yet</td></tr>`;
+    return;
+  }
+
+  payments.forEach((p, i) => {
+    const status = p.verified ? "VERIFIED" : p.status || "PENDING";
+    const btn = p.verified ? "" : `<button onclick="verifyPayment(${i})">✅ Verify</button>`;
+    tbody.innerHTML += `<tr>
+      <td>${p.name}</td>
+      <td>${p.email}</td>
+      <td>${p.referenceId}</td>
+      <td>${p.utr || '-'}</td>
+      <td>${p.phone}</td>
+      <td>${status}</td>
+      <td>${btn}</td>
+    </tr>`;
+  });
+}
+
+// Render Verified Payments tab
+function renderVerifiedPayments() {
+  const tbody = document.getElementById("verifiedPaymentsBody");
+  tbody.innerHTML = "";
+
+  const verifiedList = payments.filter(p => p.verified);
+
+  if (verifiedList.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" style="color:#aaa;text-align:center">No verified payments yet</td></tr>`;
+    return;
+  }
+
+  verifiedList.forEach(p => {
+    tbody.innerHTML += `<tr>
+      <td>${p.name}</td>
+      <td>${p.email}</td>
+      <td>${p.referenceId}</td>
+      <td>${p.utr}</td>
+      <td>${p.phone}</td>
+      <td>${p.verifiedAt ? new Date(p.verifiedAt).toLocaleString() : new Date().toLocaleString()}</td>
+    </tr>`;
+  });
+}
+
+// Manual verification function with UTR validation
+function verifyPayment(index) {
+  const payment = payments[index];
+  if (payment.verified) return;
+
+  const utr = payment.utr.trim().toUpperCase();
+  if (!/^[A-Z0-9]{12}$/.test(utr)) {
+    alert("❌ Invalid UTR! Must be 12-character alphanumeric.");
+    return;
+  }
+
+  fetch("/payments/verify", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ referenceId: payment.referenceId })
+  })
+  .then(res => {
+    if (!res.ok) return res.json().then(d => { throw new Error(d.error || "Server failed"); });
+    return res.json();
+  })
+  .then(data => {
+    if (data.success) {
+      // Update local array
+      payment.verified = true;
+      payment.verifiedAt = new Date().toISOString();
+
+      // Re-render payments immediately
+      renderPayments();
+      renderVerifiedPayments();
+
+      // ✅ No alert shown
+    } else {
+      alert("❌ Verification failed on server");
+    }
+  })
+  .catch(err => {
+    console.error("Server update failed:", err);
+    alert("❌ Error verifying payment on server: " + err.message);
+  });
+}
+
+
+
+
+
+
+
+
+
+// Refresh payments after login or every few seconds
+async function refreshPayments() {
+  await loadPayments();
+}
+
+// Initial load
+setTimeout(loadPayments, 1000);
+setInterval(()=>{ if(cachedPassword) loadPayments(); }, 10000);
+</script>
+
 
 <script>
 let cachedPassword = "";
@@ -534,6 +753,61 @@ function showTab(tabName,event){
   document.querySelectorAll(".tab-btn").forEach(btn=>btn.classList.remove("active"));
   if(event) event.currentTarget.classList.add("active");
 }
+function filterDelegatesTab() {
+  const query = document.getElementById("delegateSearchTab").value.toLowerCase();
+  const tbody = document.getElementById("searchDelegatesBody");
+
+  tbody.innerHTML = "";
+
+  const filtered = delegates.filter(delegate => {
+    const name = delegate.name.toLowerCase();
+    const email = delegate.email.toLowerCase();
+    const phone = delegate.phone.toLowerCase();
+    const college = delegate.college.toLowerCase();
+    const refId = delegate.referenceId ? delegate.referenceId.toLowerCase() : "";
+    
+    // Find payment info
+    const payment = payments.find(p => p.email === delegate.email);
+    const paymentStatus = payment ? (payment.verified ? "VERIFIED" : payment.status || "PENDING") : "PENDING";
+    
+    return (
+      name.includes(query) ||
+      email.includes(query) ||
+      phone.includes(query) ||
+      college.includes(query) ||
+      refId.includes(query) ||
+      paymentStatus.toLowerCase().includes(query)
+    );
+  });
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="10" style="color:#aaa;text-align:center">No matching delegates found</td></tr>`;
+    return;
+  }
+
+  filtered.forEach(delegate => {
+    const status = delegate.allocation ? '<span class="allocated-badge">Allocated</span>' : '<span class="pending-badge">Pending</span>';
+    const allocation = delegate.allocation ? `${delegate.allocation.committee} - ${delegate.allocation.country}` : 'Not allocated';
+    const prefsText = delegate.preferences.map((p,i) => `${i+1}. ${p.committee}: ${p.countries.join(', ')}`).join('<br>');
+
+    const payment = payments.find(p => p.email === delegate.email);
+    const refId = payment ? payment.referenceId || "-" : "-";
+    const paymentStatus = payment ? (payment.verified ? "VERIFIED" : payment.status || "PENDING") : "PENDING";
+
+    tbody.innerHTML += `<tr>
+      <td>${delegate.name}</td>
+      <td>${delegate.email}</td>
+      <td>${delegate.phone}</td>
+      <td>${delegate.college}</td>
+      <td><strong>${delegate.muns}</strong></td>
+      <td>${status}</td>
+      <td><strong>${allocation}</strong></td>
+      <td>${refId}</td>
+      <td>${paymentStatus}</td>
+    </tr>`;
+  });
+}
+
 
 async function refreshData(){ await loadData(); }
 function exportData(){ alert("Export functionality - Would export current allocations to Excel/CSV"); }

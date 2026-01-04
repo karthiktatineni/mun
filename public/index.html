@@ -172,6 +172,10 @@
   <section id="schedule" aria-labelledby="schedule-title">
     <div class="container">
       <div class="section-head">
+        <div class="matrix-wrapper">
+
+</div>
+
         <h2 id="schedule-title">Schedule & Event Flow</h2>
         <div class="rule" aria-hidden="true"></div>
         <span class="accent">Orientation • Committee Sessions • Closing & Awards</span>
@@ -243,8 +247,14 @@
         <input type="number" name="muns" placeholder="Number of MUNs Attended" required>
       </div>
 
+
       <div class="committee-preferences">
         <h3>Committee Preferences (choose 3 committees and 3 countries each)</h3>
+<button class="matrix-btn" onclick="window.open('/countryMatrix.html','_blank')">
+  View Country Matrix
+</button>
+
+
 
         <div class="committee-block">
           <select name="committee1" required>
@@ -286,14 +296,15 @@
         </div>
       </div>
 
-      <div class="submit-wrapper">
-        <button type="submit" class="submit-btn">submit</button>
-      </div>
+<div class="submit-wrapper">
+  <button type="submit" class="submit-btn">Submit</button>
+</div>
+<p id="msg"></p>
 
-      <p id="msg"></p>
     </form>
-
+<script src="script.js"></script>
   </div>
+  
 </section>
 
 
@@ -353,7 +364,7 @@
         <div class="avatar">
           <img src="https://via.placeholder.com/200x200.png?text=OC" alt="Organising Committee Head portrait" />
         </div>
-        <div class="role">Head of Organising Committee</div>
+        <div class="role">Organising Committee Head</div>
         <div class="name">Name Placeholder</div>
       </article>
 
@@ -905,10 +916,6 @@ hamburger.addEventListener('click', () => {
   </script>
   <script src="script.js" type="text/javascript" defer></script>
   
-  <script>
-
-</script>
-
 
 </body>
 </html>
