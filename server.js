@@ -11,7 +11,7 @@ app.use(express.json()); // parse JSON
 
 const DATA_FILE = path.join(__dirname, "public", "registrations.json");
 const EXPORT_DIR = path.join(__dirname, "exports");
-const allocateDelegate = require("./allocateFromExcel");
+
 
 // Ensure files/folders exist
 if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, "[]");
