@@ -350,16 +350,17 @@
 <!-- Verified Payments Tab -->
 <div id="verifiedPayments" class="tab-content hidden">
   <table id="verifiedPaymentsTable">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Reference ID</th>
-        <th>UTR</th>
-        <th>Phone</th>
-        <th>Verified On</th>
-      </tr>
-    </thead>
+<thead>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Reference ID</th>
+    <th>UTR</th>
+    <th>Phone</th>
+    <th>Verified On</th>
+    <th>Action</th>
+  </tr>
+</thead>
     <tbody id="verifiedPaymentsBody"></tbody>
   </table>
 </div>
@@ -435,21 +436,71 @@ function renderVerifiedPayments() {
   const verifiedList = payments.filter(p => p.verified);
 
   if (verifiedList.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="6" style="color:#aaa;text-align:center">No verified payments yet</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7" style="color:#aaa;text-align:center">No verified payments yet</td></tr>`;
     return;
   }
 
-  verifiedList.forEach(p => {
+  verifiedList.forEach((p, i) => {
+    // Find delegate allocation
+    const delegate = delegates.find(d => d.email === p.email);
+    const allocation = delegate && delegate.allocation ? delegate.allocation : null;
+
+    // Create the Send Confirmation button only if allocation exists
+    const allocationBtn = allocation
+      ? `<button onclick="sendConfirmationEmail('${p.email}', this)">📧 Send Confirmation</button>`
+      : "";
+
     tbody.innerHTML += `<tr>
-      <td>${p.name}</td>
-      <td>${p.email}</td>
-      <td>${p.referenceId}</td>
-      <td>${p.utr}</td>
-      <td>${p.phone}</td>
-      <td>${p.verifiedAt ? new Date(p.verifiedAt).toLocaleString() : new Date().toLocaleString()}</td>
-    </tr>`;
+  <td>${p.name}</td>
+  <td>${p.email}</td>
+  <td>${p.referenceId}</td>
+  <td>${p.utr}</td>
+  <td>${p.phone}</td>
+  <td>${p.verifiedAt ? new Date(p.verifiedAt).toLocaleString() : new Date().toLocaleString()}</td>
+  <td>${allocationBtn}</td>
+</tr>`;
+
   });
 }
+function sendConfirmationEmail(email, btn) {
+  const delegate = delegates.find(d => d.email === email);
+  if (!delegate || !delegate.allocation) {
+    alert("❌ Allocation not found for this delegate!");
+    return;
+  }
+
+  const allocation = delegate.allocation;
+  const payment = payments.find(p => p.email === email);
+  const referenceId = payment ? payment.referenceId : "N/A";
+
+  fetch("/send-confirmation-email", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: delegate.name,
+      email: delegate.email,
+      referenceId: referenceId,
+      committee: allocation.committee,
+      country: allocation.country
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      alert(`✅ Confirmation email sent to ${delegate.email}`);
+      // Disable the button after sending
+      if(btn) btn.disabled = true;
+      if(btn) btn.textContent = "✅ Sent";
+    } else {
+      alert(`❌ Failed to send email: ${data.error}`);
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    alert(`❌ Error sending email: ${err.message}`);
+  });
+}
+
 
 // Manual verification function with UTR validation
 function verifyPayment(index) {

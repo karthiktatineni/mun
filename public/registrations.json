@@ -327,35 +327,5 @@
       "paidAt": "2026-01-04T09:09:33.059Z"
     },
     "createdAt": "2026-01-04T09:03:35.963Z"
-  },
-  {
-    "name": "anish",
-    "email": "karthiktatineni34@gmail.com",
-    "phone": "7995466261",
-    "college": "a",
-    "muns": "2",
-    "allocation": [
-      {
-        "committee": "UNSC",
-        "countries": []
-      },
-      {
-        "committee": "DISEC",
-        "countries": []
-      },
-      {
-        "committee": "UNSC",
-        "countries": []
-      }
-    ],
-    "referenceId": "MUNIARE_719373",
-    "payment": {
-      "utr": "21313213132",
-      "status": "PAID",
-      "verified": false,
-      "verifiedAt": null,
-      "paidAt": "2026-01-04T09:17:27.695Z"
-    },
-    "createdAt": "2026-01-04T09:09:52.967Z"
   }
 ]

@@ -2,28 +2,37 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const XLSX = require("xlsx");
+const nodemailer = require("nodemailer");
 
 const app = express();
 const PORT = 3000;
 const ADMIN_PASSWORD = "munadmin";
 
-app.use(express.json()); // parse JSON
+app.use(express.json());
 
 const DATA_FILE = path.join(__dirname, "public", "registrations.json");
 const EXPORT_DIR = path.join(__dirname, "exports");
-
 
 // Ensure files/folders exist
 if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, "[]");
 if (!fs.existsSync(EXPORT_DIR)) fs.mkdirSync(EXPORT_DIR);
 
-// ------------------- API ROUTES -------------------
+// Nodemailer transporter
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: "karthiktatineni34@gmail.com",
+    pass: "yxqi dzst rasj acgr" // use App Password, not actual Gmail password
+  }
+});
 
-// 1️⃣ Registration
+// ------------------- ROUTES -------------------
+
+// 1️⃣ Register a new delegate
 app.post("/register", (req, res) => {
   const registrations = JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
-  const referenceId = "MUNIARE_" + Math.floor(100000 + Math.random() * 900000);
 
+  const referenceId = "MUNIARE_" + Math.floor(100000 + Math.random() * 900000);
   const newRegistration = {
     ...req.body,
     referenceId,
@@ -36,27 +45,21 @@ app.post("/register", (req, res) => {
   res.json({ success: true, referenceId });
 });
 
-// 2️⃣ Payment
+// 2️⃣ Submit Payment
 app.post("/payment", (req, res) => {
   try {
     const { referenceId, utr } = req.body;
-    if (!referenceId || !utr) {
-      return res.status(400).json({ success: false, message: "Reference ID or UTR missing" });
-    }
+    if (!referenceId || !utr) return res.status(400).json({ success: false, message: "Reference ID or UTR missing" });
 
-    // Load registrations
-    const registrations = JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"));
+    const registrations = JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
     const entry = registrations.find(r => r.referenceId === referenceId);
     if (!entry) return res.status(404).json({ success: false, message: "Registration not found" });
 
-    // Update payment info
     entry.payment.utr = utr;
     entry.payment.status = "PAID";
     entry.payment.paidAt = new Date().toISOString();
 
     fs.writeFileSync(DATA_FILE, JSON.stringify(registrations, null, 2));
-
-    // Return registration info
     res.json({ success: true, registration: { name: entry.name, phone: entry.phone } });
   } catch (err) {
     console.error("Payment route error:", err);
@@ -64,19 +67,18 @@ app.post("/payment", (req, res) => {
   }
 });
 
-
-// 3️⃣ Admin data
+// 3️⃣ Admin - Get all registrations
 app.post("/admin/data", (req, res) => {
   if (req.body.password !== ADMIN_PASSWORD) return res.status(401).json({ error: "Unauthorized" });
   const registrations = JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
   res.json(registrations);
 });
 
-// 4️⃣ Export Excel
+// 4️⃣ Admin - Export registrations to Excel
 app.post("/admin/export", (req, res) => {
   if (req.body.password !== ADMIN_PASSWORD) return res.status(401).json({ error: "Unauthorized" });
-  const data = JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
 
+  const data = JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
   const formatted = data.map(r => ({
     Name: r.name,
     Email: r.email,
@@ -96,10 +98,11 @@ app.post("/admin/export", (req, res) => {
 
   const filePath = path.join(EXPORT_DIR, "registrations.xlsx");
   XLSX.writeFile(workbook, filePath);
+
   res.json({ success: true, message: "Excel exported successfully!" });
 });
 
-// 5️⃣ Verify payment
+// 5️⃣ Verify payment manually
 app.post("/payments/verify", (req, res) => {
   try {
     const { referenceId } = req.body;
@@ -113,23 +116,49 @@ app.post("/payments/verify", (req, res) => {
     entry.payment.verifiedAt = new Date().toISOString();
     fs.writeFileSync(DATA_FILE, JSON.stringify(registrations, null, 2));
 
-    return res.json({ success: true });
+    res.json({ success: true });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ error: "Server error verifying payment" });
+    res.status(500).json({ error: "Server error verifying payment" });
   }
 });
+
+// 6️⃣ Send confirmation email
+app.post("/send-confirmation-email", async (req, res) => {
+  const { name, email, referenceId, committee, country } = req.body;
+  if (!email) return res.status(400).json({ success: false, error: "Email is required" });
+
+  const mailOptions = {
+    from: '"MUN IARE" <karthiktatineni34@gmail.com>',
+    to: email,
+    subject: "MUN IARE - Registration Confirmed",
+    html: `
+<p>Dear ${name},</p>
+      <p>We are thrilled to have you join us at MUN IARE! Your registration has been verified.</p>
+      <p><strong>Reference ID:</strong> ${referenceId}</p>
+      <p><strong>Committee:</strong> ${committee}</p>
+      <p><strong>Country:</strong> ${country}</p>
+      <p>Get ready for an exciting experience of debates, diplomacy, and making new connections. Welcome aboard!</p>
+    `
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    res.json({ success: true });
+  } catch (err) {
+    console.error("Email error:", err);
+    res.json({ success: false, error: err.message });
+  }
+});
+
+// 7️⃣ Public allocations JSON
 app.get("/public-allocations", (req, res) => {
   res.sendFile(path.join(__dirname, "allocations.json"));
 });
 
-
-
-
+// 8️⃣ Country matrix HTML
 app.get("/country-matrix-json", (req, res) => {
   const registrations = JSON.parse(fs.readFileSync(DATA_FILE, "utf8"));
-
-  // Gather allocations
   const matrix = [];
 
   registrations.forEach(delegate => {
@@ -145,7 +174,6 @@ app.get("/country-matrix-json", (req, res) => {
     });
   });
 
-  // Generate HTML
   let html = `
     <html>
     <head>
@@ -176,17 +204,10 @@ app.get("/country-matrix-json", (req, res) => {
     </tr>`;
   });
 
-  html += `
-      </table>
-    </body>
-    </html>
-  `;
-
+  html += `</table></body></html>`;
   res.send(html);
 });
+app.use(express.static("public"));
 
-
-// ------------------- Static files -------------------
-app.use(express.static("public")); // static files last
-
+// ------------------- START SERVER -------------------
 app.listen(PORT, () => console.log(`✅ Server running on http://localhost:${PORT}`));
