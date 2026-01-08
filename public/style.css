@@ -4,7 +4,7 @@
       --gold: #D4AF37;
       --silver: #C0C0C0;
       --offwhite: #EDEDED;
-      --bg: #0B0B0B;
+      --bg: #010314;
       --text: #F5F5F5;
       --muted: #B0B0B0;
       --card: rgba(255, 255, 255, 0.06);
@@ -16,6 +16,7 @@
       --max: 1200px;
       --ease: cubic-bezier(0.2, 0.7, 0, 1);
     }
+    
 #particles {
   position: fixed;       /* full-page background */
   top: 0;
@@ -143,9 +144,6 @@
   background:
     radial-gradient(1200px 600px at 80% 10%, rgba(212,175,55,0.07), transparent 60%),
    
-linear-gradient(180deg, transparent, transparent 60%, #0B0B0B 100%);
-  position: relative;
-  overflow: hidden;
 }
 
     .hero canvas {
