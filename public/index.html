@@ -24,7 +24,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
   <link rel="stylesheet" href="style.css">
-   
+     <script>
+    if (window.location.hostname === "admin.iaremun.in") {
+      window.location.replace("/admin.html");
+    }
+  </script>
 
 
 </head>
@@ -66,18 +70,31 @@
 
 
   <!-- Hero -->
+  <!-- Hero / Landing Section -->
   <section class="hero" aria-label="Hero">
     <canvas id="particles" aria-hidden="true"></canvas>
+    
     <div class="container hero-inner">
+      <!-- Staggered animation classes added -->
+      <h1 class="hero-title stagger-1">IARE Model United Nations</h1>
+      <p class="hero-subtitle stagger-2">Where Diplomacy Meets Leadership</p> <!-- Added subtitle for better landing feel -->
+      <p class="hero-date stagger-3">March 6th, 2026 - March 8th, 2026</p>
       
-      <h1>IARE Model United Nations</h1>
-      
-      <p class="sub data">March 6th,2026 - March 8th,2026</p>
-      <div class="hero-actions" aria-label="Primary actions">
+      <div class="hero-actions stagger-4" aria-label="Primary actions">
         <a href="#register" class="cta" aria-label="Register for IARE MUN">Register Now</a>
         <a href="#committees" class="btn-outline" aria-label="View MUN Committees">View Committees</a>
       </div>
     </div>
+
+    <!-- Scroll Down Indicator -->
+    <a href="#about" class="scroll-down stagger-5" aria-label="Scroll down to About section">
+      <div class="mouse">
+        <div class="wheel"></div>
+      </div>
+      <div class="arrows">
+        <span></span><span></span><span></span>
+      </div>
+    </a>
   </section>
 
   <!-- About -->
